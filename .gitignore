@@ -1,0 +1,40 @@
+# === [Frontend: React] ===
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.js
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/build/
+frontend/coverage/
+
+# === [Backend: Spring + Gradle] ===
+backend/build/
+backend/out/
+backend/.gradle/
+backend/.idea/
+backend/*.iml
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/.mvn/
+backend/target/
+backend/.env
+
+# === [Common - all OS/editor junk] ===
+*.log
+.DS_Store
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+# === [IDE / Editor configs - optional] ===
+.idea/
+.vscode/
+*.iml
