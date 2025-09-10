@@ -4,4 +4,7 @@
 
     1. 라우팅 구현을 위해 react-router추가
     2. SEO를 위해 BrowserRouter 사용
-    3.
+    3. 서버와 통신하기 위해 ky 추가
+        - axios에 비해 작은 번들
+        - 깔끔한 코드
+    4.
