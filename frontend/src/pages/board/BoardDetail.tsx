@@ -27,17 +27,57 @@ const BoardDetail = () => {
   }, [articleId]);
 
   return (
-    <div>
+    <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto mt-8">
       {data ? (
-        <div>
-          <h1>{data.title}</h1>
-          <p>{data.user_id}</p>
-          <p>{data.createdAt}</p>
-          <p>{data.viewCount}</p>
-          <p>{data.content}</p>
+        <div className="bg-white text-gray-900 p-6 rounded-lg shadow">
+          <h1 className="text-3xl font-bold mb-4 text-blue-600">
+            {data.title}
+          </h1>
+          <div className="flex items-center gap-4 mb-2 text-sm text-gray-500">
+            <span className="flex items-center gap-1">
+              <svg
+                className="w-4 h-4 text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.657 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              작성자: {data.user_id}
+            </span>
+            <span className="flex items-center gap-1">
+              <svg
+                className="w-4 h-4 text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {data.createdAt}
+            </span>
+            <span className="flex items-center gap-1">
+              <svg
+                className="w-4 h-4 text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              조회수: {data.viewCount}
+            </span>
+          </div>
+          <hr className="my-4" />
+          <div className="text-lg leading-relaxed whitespace-pre-line">
+            {data.content}
+          </div>
         </div>
       ) : (
-        <div>Loading...</div>
+        <div className="text-center py-8 text-lg">Loading...</div>
       )}
     </div>
   );
