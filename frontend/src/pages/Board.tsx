@@ -5,7 +5,8 @@ import { Article, ArticleListResponse } from "@/types/board";
 const Board = () => {
   const [data, setData] = useState<ArticleListResponse | null>(null);
 
-  useEffect(() => { // useEffect를 추가해서 첫 로딩 시에만 데이터가 불러와지도록 함,
+  useEffect(() => {
+    // useEffect를 추가해서 첫 로딩 시에만 데이터가 불러와지도록 함,
     const fetchData = async () => {
       try {
         const data = await ky
@@ -20,18 +21,21 @@ const Board = () => {
       }
     };
     fetchData();
-  }, data);
+  }, [setData]);
   return (
     <div>
-      {data && data?.content?.map((item) => (
-        <div key={item.id}>
-          <h2>{item.title}</h2>
-          <p>{item.content}</p>
-        </div>
-      ))}
-      {data?.map((item) => {
-        <div>{item.}</div>
-      })}
+      {data ? (
+        data?.content?.map((item) => (
+          <div key={item.id}>
+            <h2>{item.title}</h2>
+            <p>{item.user_id}</p>
+            <p>{item.content}</p>
+          </div>
+        ))
+      ) : (
+        <div>Loading...</div>
+      )}
+      {data ? <div>{data.number}</div> : <div>Loading...</div>}
     </div>
   );
 };
