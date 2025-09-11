@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ky from "ky";
 import { Article, ArticleListResponse } from "@/types/board";
+import { Link } from "react-router";
 
 const Board = () => {
   const [data, setData] = useState<ArticleListResponse | null>(null);
@@ -23,13 +24,15 @@ const Board = () => {
     fetchData();
   }, [setData]);
   return (
-    <div>
+    <div className="bg-blue-500 text-white p-4 rounded-lg">
       {data ? (
         data?.content?.map((item) => (
           <div key={item.id}>
-            <h2>{item.title}</h2>
+            <Link to={`/board/${item.id}`}>
+              <h2>{item.title}</h2>
+            </Link>
             <p>{item.user_id}</p>
-            <p>{item.content}</p>
+            {/* <p>{item.content}</p> */}
           </div>
         ))
       ) : (
