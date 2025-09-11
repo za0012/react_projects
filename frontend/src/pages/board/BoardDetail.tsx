@@ -80,6 +80,10 @@ const BoardDetail = () => {
         <div className="text-center py-8 text-lg">Loading...</div>
       )}
     </div>
+    // 제목은 파란색, 크게, 굵게
+    // 작성자/날짜/조회수는 아이콘과 함께 한 줄에 표시
+    // 본문은 여백과 줄바꿈 유지
+    // 전체 카드에 그림자와 여백 추가
   );
 };
 

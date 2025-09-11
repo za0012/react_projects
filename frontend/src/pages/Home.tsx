@@ -8,7 +8,7 @@ const Home = () => {
     <div className="App">
       <header className="App-header">
         <p className="cookieRunFont">
-          안넝하-십미가-쿠키런-애-오신것을--아래-무곰을-눌러
+          안넝하-십미가-쿠키런-애-오신것을--아래-무곰을-누르면-어봐웃으로-이동
         </p>
         <Link to={"/about"} className="App-link">
           <img src={logo} className="App-logo" alt="logo" />
