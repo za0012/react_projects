@@ -5,6 +5,11 @@ import { Link } from "react-router";
 
 const Board = () => {
   const [data, setData] = useState<ArticleListResponse | null>(null);
+  const [page, setPage] = useState(0);
+  //상태가 점점 많이질수록 useReducer를 쓰는게 좋음. 뭐 data, page, loading, error, hasMore 등등... 추후 리팩토링 할 때 고려해볼 것.
+  // useReducer는 상태 전환 로직을 컴포넌트 외부로 분리하여 관리할 수 있게 해줌. (Redux와 비슷한 개념)
+  // useState는 상태가 단순하고 서로 독립적이고 업데이트가 간단한 경우에 사용
+  // useReducer는 상태 로직이 복잡하고 여러 상태가 서로 연괸돼고 액션 타입으로 의도를 명확히 하고 싶을 때 사용한다.
 
   useEffect(() => {
     // useEffect를 추가해서 첫 로딩 시에만 데이터가 불러와지도록 함,
@@ -12,7 +17,7 @@ const Board = () => {
       try {
         const data = await ky
           .get(
-            "http://localhost:8080/api/articles?page=0&size=10&sortBy=createdAt&sortDir=desc"
+            `http://localhost:8080/api/articles?page=${page}&size=10&sortBy=createdAt&sortDir=desc`
           )
           .json<ArticleListResponse>();
         console.log(data);
@@ -22,7 +27,7 @@ const Board = () => {
       }
     };
     fetchData();
-  }, [setData]);
+  }, [page]); // 불필요한 렌더링을 줄이기 위해 의존성 배열(deps)을 인자로 받도록 설정 (특정 값이 변경될 때만 다시 실행), 빈 값을 넣어주면 첫 렌더링 시에만 실행됨. 변화가 없기 때문이다.
   return (
     <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto mt-8">
       {data ? (
@@ -80,6 +85,24 @@ const Board = () => {
           ))}
           <div className="text-center text-white mt-6">
             페이지: {data.number + 1}
+            <div className="mt-2 space-x-2">
+              <button
+                onClick={() => {
+                  setPage((prev) => Math.max(prev - 1, 0)); //주어진 숫자 중 가장 큰 수 반환
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+              >
+                이전
+              </button>
+              <button
+                onClick={() => {
+                  setPage((prev) => Math.min(prev + 1, data.totalPages - 1)); //주어진 숫자 중 가장 작은 수 반환, 0부터 시작해서 totalPages-1까지 가능
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+              >
+                다음
+              </button>
+            </div>
           </div>
         </div>
       ) : (

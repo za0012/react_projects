@@ -38,3 +38,7 @@ backend/.env
 .idea/
 .vscode/
 *.iml
+
+# 환경 설정 파일
+.prettierrc
+eslint.config.mts

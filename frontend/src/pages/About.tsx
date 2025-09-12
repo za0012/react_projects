@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 p-8 rounded-xl shadow-lg mx-auto mt-10 w-full">
+    <div className="bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 p-8 rounded-xl shadow-lg mx-auto mt-10 w-full h-full">
       <h1 className="text-3xl font-extrabold text-pink-600 mb-4 text-center animate-bounce">
         안녕하세요! 멸치액젓입니다!
       </h1>
