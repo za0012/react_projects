@@ -46,8 +46,9 @@
   "devDependencies": {
     "@eslint/js": "^9.35.0",
     "@tailwindcss/postcss": "^4.1.13",
+    "@typescript-eslint/parser": "^8.43.0",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.35.0",
+    "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.4.0",
     "postcss": "^8.5.6",
