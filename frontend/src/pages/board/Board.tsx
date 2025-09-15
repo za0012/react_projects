@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ky from "ky";
-import { Article, ArticleListResponse } from "@/types/board";
+import { ArticleListResponse } from "@/types/board";
 import { Link } from "react-router";
 
 const Board = () => {

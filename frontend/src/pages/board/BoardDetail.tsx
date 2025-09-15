@@ -3,10 +3,6 @@ import { Article } from "@/types/board";
 import ky from "ky";
 import { useParams } from "react-router";
 
-interface Props {
-  articleId: number;
-}
-
 const BoardDetail = () => {
   const [data, setData] = useState<Article | null>(null);
   const { articleId } = useParams<{ articleId: string }>();
