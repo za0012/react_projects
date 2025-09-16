@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ky from "ky";
 import { ArticleListResponse } from "@/types/board";
-import { Link } from "react-router";
+import { useNavigate } from "@tanstack/react-router";
 
 const Board = () => {
   const [data, setData] = useState<ArticleListResponse | null>(null);
@@ -11,13 +11,14 @@ const Board = () => {
   // useState는 상태가 단순하고 서로 독립적이고 업데이트가 간단한 경우에 사용
   // useReducer는 상태 로직이 복잡하고 여러 상태가 서로 연괸돼고 액션 타입으로 의도를 명확히 하고 싶을 때 사용한다.
 
+  const navigate = useNavigate();
   useEffect(() => {
     // useEffect를 추가해서 첫 로딩 시에만 데이터가 불러와지도록 함,
     const fetchData = async () => {
       try {
         const data = await ky
           .get(
-            `http://localhost:8080/api/articles?page=${page}&size=10&sortBy=createdAt&sortDir=desc`
+            `http://localhost:8080/api/articles?page=${page}&size=10&sortBy=createdAt&sortDir=desc`,
           )
           .json<ArticleListResponse>();
         console.log(data);
@@ -29,23 +30,36 @@ const Board = () => {
     fetchData();
   }, [page]); // 불필요한 렌더링을 줄이기 위해 의존성 배열(deps)을 인자로 받도록 설정 (특정 값이 변경될 때만 다시 실행), 빈 값을 넣어주면 첫 렌더링 시에만 실행됨. 변화가 없기 때문이다.
   return (
-    <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto mt-8">
+    <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-blue-500 p-6 text-white shadow-lg">
+      <button
+        className="mb-4 rounded bg-white px-4 py-2 text-blue-600 shadow hover:bg-gray-100"
+        onClick={() => {
+          navigate({ to: "/board/write" });
+        }}
+      >
+        글쓰기
+      </button>
+
       {data ? (
         <div className="space-y-4">
-          {data.content.map((item) => (
+          {data.content.map(item => (
             <div
               key={item.id}
-              className="bg-white text-gray-900 p-4 rounded-lg shadow hover:shadow-xl transition-shadow"
+              className="rounded-lg bg-white p-4 text-gray-900 shadow transition-shadow hover:shadow-xl"
             >
-              <Link to={`/board/${item.id}`}>
-                <h2 className="text-xl font-bold text-blue-600 hover:underline mb-2">
-                  {item.title}
-                </h2>
-              </Link>
-              <div className="flex items-center gap-4 text-sm text-gray-500 mb-1">
+              <h2
+                className="mb-2 font-sans text-xl font-bold text-blue-600 hover:underline"
+                onClick={() => {
+                  navigate({ to: `/board/${item.id}` });
+                }}
+              >
+                {item.title}
+              </h2>
+
+              <div className="mb-1 flex items-center gap-4 text-sm text-gray-500">
                 <span className="flex items-center gap-1">
                   <svg
-                    className="w-4 h-4 text-blue-400"
+                    className="h-4 w-4 text-blue-400"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -57,7 +71,7 @@ const Board = () => {
                 </span>
                 <span className="flex items-center gap-1">
                   <svg
-                    className="w-4 h-4 text-blue-400"
+                    className="h-4 w-4 text-blue-400"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -69,7 +83,7 @@ const Board = () => {
                 </span>
                 <span className="flex items-center gap-1">
                   <svg
-                    className="w-4 h-4 text-blue-400"
+                    className="h-4 w-4 text-blue-400"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -83,22 +97,22 @@ const Board = () => {
               {/* <p className="text-gray-700">{item.content}</p> */}
             </div>
           ))}
-          <div className="text-center text-white mt-6">
+          <div className="mt-6 text-center text-white">
             페이지: {data.number + 1}
             <div className="mt-2 space-x-2">
               <button
                 onClick={() => {
-                  setPage((prev) => Math.max(prev - 1, 0)); //주어진 숫자 중 가장 큰 수 반환
+                  setPage(prev => Math.max(prev - 1, 0)); //주어진 숫자 중 가장 큰 수 반환
                 }}
-                className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+                className="rounded bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700"
               >
                 이전
               </button>
               <button
                 onClick={() => {
-                  setPage((prev) => Math.min(prev + 1, data.totalPages - 1)); //주어진 숫자 중 가장 작은 수 반환, 0부터 시작해서 totalPages-1까지 가능
+                  setPage(prev => Math.min(prev + 1, data.totalPages - 1)); //주어진 숫자 중 가장 작은 수 반환, 0부터 시작해서 totalPages-1까지 가능
                 }}
-                className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+                className="rounded bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700"
               >
                 다음
               </button>
@@ -106,7 +120,7 @@ const Board = () => {
           </div>
         </div>
       ) : (
-        <div className="text-center py-8 text-lg">Loading...</div>
+        <div className="py-8 text-center text-lg">Loading...</div>
       )}
     </div>
     // 각 게시글을 카드 형태로, 호버 시 그림자 강조

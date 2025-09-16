@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Article } from '@/types/board';
-import ky from 'ky';
-import { useParams } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { Article } from "@/types/board";
+import ky from "ky";
+import { useNavigate, useParams } from "@tanstack/react-router";
 
 const BoardDetail = () => {
   const [data, setData] = useState<Article | null>(null);
-  const { articleId } = useParams<{ articleId: string }>();
+
+  const articleId = useParams({ from: "/board/$articleId" });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +17,7 @@ const BoardDetail = () => {
         console.log(data);
         setData(data);
       } catch (error) {
-        console.error('Error fetching Article detail:', error);
+        console.error("Error fetching Article detail:", error);
       }
     };
     fetchData();
