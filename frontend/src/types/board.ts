@@ -35,7 +35,7 @@ export interface ArticleListResponse {
   totalPages: number;
 }
 
-type ApiResponse = {
-  content: Article[];
-  // add other properties if needed
-};
+// type ApiResponse = {
+//   content: Article[];
+//   // add other properties if needed
+// };

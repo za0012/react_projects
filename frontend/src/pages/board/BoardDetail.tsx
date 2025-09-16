@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Article } from "@/types/board";
-import ky from "ky";
-import { useParams } from "react-router";
+import React, { useState, useEffect } from 'react';
+import { Article } from '@/types/board';
+import ky from 'ky';
+import { useParams } from 'react-router';
 
 const BoardDetail = () => {
   const [data, setData] = useState<Article | null>(null);
@@ -16,23 +16,23 @@ const BoardDetail = () => {
         console.log(data);
         setData(data);
       } catch (error) {
-        console.error("Error fetching Article detail:", error);
+        console.error('Error fetching Article detail:', error);
       }
     };
     fetchData();
   }, [articleId]);
 
   return (
-    <div className="bg-blue-500 text-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto mt-8">
+    <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-blue-500 p-6 text-white shadow-lg">
       {data ? (
-        <div className="bg-white text-gray-900 p-6 rounded-lg shadow">
-          <h1 className="text-3xl font-bold mb-4 text-blue-600">
+        <div className="rounded-lg bg-white p-6 text-gray-900 shadow">
+          <h1 className="mb-4 text-3xl font-bold text-blue-600">
             {data.title}
           </h1>
-          <div className="flex items-center gap-4 mb-2 text-sm text-gray-500">
+          <div className="mb-2 flex items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
               <svg
-                className="w-4 h-4 text-blue-400"
+                className="h-4 w-4 text-blue-400"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -44,7 +44,7 @@ const BoardDetail = () => {
             </span>
             <span className="flex items-center gap-1">
               <svg
-                className="w-4 h-4 text-blue-400"
+                className="h-4 w-4 text-blue-400"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -56,7 +56,7 @@ const BoardDetail = () => {
             </span>
             <span className="flex items-center gap-1">
               <svg
-                className="w-4 h-4 text-blue-400"
+                className="h-4 w-4 text-blue-400"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -68,12 +68,12 @@ const BoardDetail = () => {
             </span>
           </div>
           <hr className="my-4" />
-          <div className="text-lg leading-relaxed whitespace-pre-line">
+          <div className="whitespace-pre-line text-lg leading-relaxed">
             {data.content}
           </div>
         </div>
       ) : (
-        <div className="text-center py-8 text-lg">Loading...</div>
+        <div className="py-8 text-center text-lg">Loading...</div>
       )}
     </div>
     // 제목은 파란색, 크게, 굵게
