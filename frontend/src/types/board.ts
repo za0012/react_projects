@@ -35,6 +35,12 @@ export interface ArticleListResponse {
   totalPages: number;
 }
 
+export interface ArticleWrite {
+  title: string;
+  content: string;
+  username: number;
+}
+
 // type ApiResponse = {
 //   content: Article[];
 //   // add other properties if needed
