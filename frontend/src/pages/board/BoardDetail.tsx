@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Article } from "@/types/board";
 import ky from "ky";
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useParams } from "@tanstack/react-router";
 
 const BoardDetail = () => {
   const [data, setData] = useState<Article | null>(null);

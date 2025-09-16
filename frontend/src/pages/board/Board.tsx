@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ky from "ky";
 import { ArticleListResponse } from "@/types/board";
-import { useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 const Board = () => {
   const [data, setData] = useState<ArticleListResponse | null>(null);
@@ -11,7 +11,6 @@ const Board = () => {
   // useState는 상태가 단순하고 서로 독립적이고 업데이트가 간단한 경우에 사용
   // useReducer는 상태 로직이 복잡하고 여러 상태가 서로 연괸돼고 액션 타입으로 의도를 명확히 하고 싶을 때 사용한다.
 
-  const navigate = useNavigate();
   useEffect(() => {
     // useEffect를 추가해서 첫 로딩 시에만 데이터가 불러와지도록 함,
     const fetchData = async () => {
@@ -31,15 +30,11 @@ const Board = () => {
   }, [page]); // 불필요한 렌더링을 줄이기 위해 의존성 배열(deps)을 인자로 받도록 설정 (특정 값이 변경될 때만 다시 실행), 빈 값을 넣어주면 첫 렌더링 시에만 실행됨. 변화가 없기 때문이다.
   return (
     <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-blue-500 p-6 text-white shadow-lg">
-      <button
-        className="mb-4 rounded bg-white px-4 py-2 text-blue-600 shadow hover:bg-gray-100"
-        onClick={() => {
-          navigate({ to: "/board/write" });
-        }}
-      >
-        글쓰기
-      </button>
-
+      <Link to="/board/write">
+        <button className="mb-4 rounded bg-white px-4 py-2 text-blue-600 shadow hover:bg-gray-100">
+          글쓰기
+        </button>
+      </Link>
       {data ? (
         <div className="space-y-4">
           {data.content.map(item => (
@@ -47,15 +42,14 @@ const Board = () => {
               key={item.id}
               className="rounded-lg bg-white p-4 text-gray-900 shadow transition-shadow hover:shadow-xl"
             >
-              <h2
-                className="mb-2 font-sans text-xl font-bold text-blue-600 hover:underline"
-                onClick={() => {
-                  navigate({ to: `/board/${item.id}` });
-                }}
+              <Link
+                to="/board/$articleId"
+                params={{ articleId: String(item.id) }}
               >
-                {item.title}
-              </h2>
-
+                <h2 className="mb-2 font-sans text-xl font-bold text-blue-600 hover:underline">
+                  {item.title}
+                </h2>
+              </Link>
               <div className="mb-1 flex items-center gap-4 text-sm text-gray-500">
                 <span className="flex items-center gap-1">
                   <svg
