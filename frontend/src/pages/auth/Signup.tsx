@@ -2,27 +2,26 @@ import { Link, Navigate } from "@tanstack/react-router";
 import ky from "ky";
 import { useState } from "react";
 
-const Login = () => {
+const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const fetchData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const response = await ky
-        .post("http://localhost:8080/api/users/login", {
-          json: { username, password },
+        .post("http://localhost:8080/api/users/register", {
+          json: { username, password, email },
         })
         .json();
       console.log(response);
-      window.location.href = "/";
+      window.location.href = "/auth/login";
     } catch (error) {
-      console.log("로그인 오류: ", error);
-      alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+      console.log("회원가입 오류: ", error);
     }
   };
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-100 via-pink-100 to-yellow-100">
       <form
@@ -30,7 +29,7 @@ const Login = () => {
         onSubmit={fetchData}
       >
         <h2 className="mb-4 text-center text-2xl font-bold text-blue-600">
-          로그인
+          회원가입
         </h2>
         <input
           type="text"
@@ -44,20 +43,21 @@ const Login = () => {
           className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
           onChange={e => setPassword(() => e.target.value)}
         />
+        <input
+          type="email"
+          placeholder="이메일을 입력하세요"
+          className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          onChange={e => setEmail(() => e.target.value)}
+        />
         <button
           type="submit"
           className="w-full rounded-lg bg-blue-500 py-2 font-bold text-white transition hover:bg-blue-600"
         >
-          로그인
+          회원가입
         </button>
       </form>
-      <div className="mt-4 text-center text-sm text-gray-600">
-        <Link to="/auth/signup">
-          <p className="text-blue-500 hover:underline">회원가입</p>
-        </Link>
-      </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

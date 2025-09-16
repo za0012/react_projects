@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoardIndexRouteImport } from './routes/board/index'
 import { Route as BoardWriteRouteImport } from './routes/board/write'
 import { Route as BoardArticleIdRouteImport } from './routes/board/$articleId'
+import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
 const AboutRoute = AboutRouteImport.update({
@@ -41,6 +42,11 @@ const BoardArticleIdRoute = BoardArticleIdRouteImport.update({
   path: '/board/$articleId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/auth/login',
   path: '/auth/login',
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/board': typeof BoardIndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/board': typeof BoardIndexRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/board/': typeof BoardIndexRoute
@@ -78,6 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth/login'
+    | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
     | '/board'
@@ -86,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth/login'
+    | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
     | '/board'
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth/login'
+    | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
     | '/board/'
@@ -103,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
   BoardArticleIdRoute: typeof BoardArticleIdRoute
   BoardWriteRoute: typeof BoardWriteRoute
   BoardIndexRoute: typeof BoardIndexRoute
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoardArticleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/login': {
       id: '/auth/login'
       path: '/auth/login'
@@ -159,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
   BoardArticleIdRoute: BoardArticleIdRoute,
   BoardWriteRoute: BoardWriteRoute,
   BoardIndexRoute: BoardIndexRoute,
