@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoardIndexRouteImport } from './routes/board/index'
 import { Route as BoardWriteRouteImport } from './routes/board/write'
 import { Route as BoardArticleIdRouteImport } from './routes/board/$articleId'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -40,10 +41,16 @@ const BoardArticleIdRoute = BoardArticleIdRouteImport.update({
   path: '/board/$articleId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth/login': typeof AuthLoginRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/board': typeof BoardIndexRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth/login': typeof AuthLoginRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/board': typeof BoardIndexRoute
@@ -59,19 +67,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth/login': typeof AuthLoginRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/board/': typeof BoardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/board/$articleId' | '/board/write' | '/board'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth/login'
+    | '/board/$articleId'
+    | '/board/write'
+    | '/board'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/board/$articleId' | '/board/write' | '/board'
+  to:
+    | '/'
+    | '/about'
+    | '/auth/login'
+    | '/board/$articleId'
+    | '/board/write'
+    | '/board'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/auth/login'
     | '/board/$articleId'
     | '/board/write'
     | '/board/'
@@ -80,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AuthLoginRoute: typeof AuthLoginRoute
   BoardArticleIdRoute: typeof BoardArticleIdRoute
   BoardWriteRoute: typeof BoardWriteRoute
   BoardIndexRoute: typeof BoardIndexRoute
@@ -122,12 +145,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoardArticleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AuthLoginRoute: AuthLoginRoute,
   BoardArticleIdRoute: BoardArticleIdRoute,
   BoardWriteRoute: BoardWriteRoute,
   BoardIndexRoute: BoardIndexRoute,

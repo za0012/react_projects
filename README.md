@@ -29,6 +29,40 @@
             2. vite가 webpack보다 빠름(허나 webpack을 어떻게 설정하는지에 따라 다름)
             3. 사용하기 쉬움
         위와 같은 이유로 vite를 사용하게 되었고, 실제 실행 시 약 3,4배 더 빨라진 것을 체감할 수 있었다. 짱!
+    10. react-router에서 tanstack router로 마이그레이션
+        - 많은 사정이 있다.... 우선 최근 react-router v7은 더이상 react-router-dom을 필요로 하지 않게 되었다. 다만 우리가 기존에 알던 구조가 아닌 완전히 다른 구조으로 라우터 파일을 만들어야 했기에 이에 불편함을 느껴 다른 라우터를 찾아보게 되었다.
+        - 그중 내 눈에 들어온 게 tanstack router이었다. 많은 사람들이 사용하는 라이브러리인데, 타입 안전성이 있어 코드를 안정적으로 유지할 수 있다는 장점이 있다.
+        - 해당 tanstack router로 마이그레이션 하기 위해 라이브러리를 설치 한 다음 파일 구조를 전부 갈아엎었다.
+            1. App.tsx는 더이상 필요하지 않기 때문에 삭제했다.
+            2. router폴더에 루트 파일을 만든 후 안에 페이지와 같은 이름을 가진 파일들을 넣는다. 다만 여기서 write나 list는 board이라는 같은 루트를 사용하기 있기 때문에 index, $articleId, write이런 식으로 파일을 만들었다. 폴더 라우팅 방식과 비슷하다고 생각하면 될 것 같다. 추가로 TanStack Router의 Vite 플러그인이 실시간으로 파일을 감시하고 있어서 파일을 만들면 내용이 자동으로 생성된다.
+            3. 페이지를 이동하기 위해서는 const navigate = useNavigate(); 해당 구문을 넣은 뒤
+                ```js
+                onClick={() => {
+                    navigate({ to: "" });
+                }}
+                ```
+            해당 코드 또는 기존대로 Link를 넣으면 된다.
+            const params = useParams({ from: '/board/$articleId' }); 이건 파라미터.
+                - 부록
+                  Link, useNavigate언제 사용하면 좋을까?
+                  Link는 단순 클릭으로 이동할 때 사용하면 좋다. 텍스트와 같은 요소 클릭...
+                  useNavigate는 로직 처리 후 이동할 때 사용하면 좋다. 로그인 성공 후 이동이라던가... 글쓰기 완료 후 이동같은.
+            4.index.tsx는 아래와 같은 코드를 넣어줘야한다.
+            ```js
+            // 자동 생성된 라우트 트리 import (Vite 플러그인이 생성해줌)
+            import { routeTree } from './routeTree.gen'
+
+            // 라우터 생성
+            const router = createRouter({ routeTree })
+
+            // TypeScript를 위한 타입 선언
+            declare module '@tanstack/react-router' {
+                interface Register {
+                    router: typeof router
+                }
+            }
+            ```
+            5. 제일 중요한 게 __root.tsx파일이다. 이게 App.tsx랑 비슷하다고 보면 된다.
 
 # 타입 정의 관련
 
