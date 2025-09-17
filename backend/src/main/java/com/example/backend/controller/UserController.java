@@ -1,9 +1,12 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.LoginResponseDto;
 import com.example.backend.dto.UserDto;
 import com.example.backend.service.UserService;
+import com.example.backend.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +28,12 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private JwtUtil jwtUtil;
+    
+    @Value("${jwt.access-token-validity:3600}")
+    private Long accessTokenValidity;
     
     // 모든 사용자 조회 (페이징) - 관리자용
     @GetMapping
@@ -99,16 +108,30 @@ public class UserController {
         }
     }
     
-    // 로그인
+    // 로그인 (JWT 토큰 발급)
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserDto loginDto) {
         Map<String, Object> response = new HashMap<>();
         
         try {
             UserDto user = userService.authenticate(loginDto.getUsername(), loginDto.getPassword());
+            
+            // JWT 토큰 생성
+            String accessToken = jwtUtil.generateAccessToken(user.getUsername());
+            String refreshToken = jwtUtil.generateRefreshToken(user.getUsername());
+            
+            // 로그인 응답 생성
+            LoginResponseDto loginResponse = new LoginResponseDto(
+                accessToken,
+                refreshToken,
+                "Bearer",
+                accessTokenValidity,
+                user
+            );
+            
             response.put("success", true);
             response.put("message", "로그인 성공");
-            response.put("data", user);
+            response.put("data", loginResponse);
             
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
@@ -116,6 +139,61 @@ public class UserController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
+    }
+    
+    // 토큰 새로고침
+    @PostMapping("/refresh")
+    public ResponseEntity<Map<String, Object>> refreshToken(@RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            String refreshToken = request.get("refreshToken");
+            
+            if (refreshToken == null || refreshToken.isEmpty()) {
+                response.put("success", false);
+                response.put("message", "Refresh Token이 필요합니다.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+            
+            // Refresh Token 검증
+            if (!jwtUtil.isRefreshToken(refreshToken) || jwtUtil.isTokenExpired(refreshToken)) {
+                response.put("success", false);
+                response.put("message", "유효하지 않은 Refresh Token입니다.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+            
+            // 새로운 Access Token 생성
+            String username = jwtUtil.extractUsername(refreshToken);
+            String newAccessToken = jwtUtil.generateAccessToken(username);
+            
+            Map<String, Object> tokenData = new HashMap<>();
+            tokenData.put("accessToken", newAccessToken);
+            tokenData.put("tokenType", "Bearer");
+            tokenData.put("expiresIn", accessTokenValidity);
+            
+            response.put("success", true);
+            response.put("message", "토큰이 성공적으로 갱신되었습니다.");
+            response.put("data", tokenData);
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "토큰 갱신에 실패했습니다: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+    }
+    
+    // 로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, Object>> logoutUser() {
+        Map<String, Object> response = new HashMap<>();
+        
+        // 실제로는 토큰을 블랙리스트에 추가하거나 무효화해야 합니다.
+        // 여기서는 단순히 성공 응답만 반환합니다.
+        response.put("success", true);
+        response.put("message", "로그아웃되었습니다.");
+        
+        return ResponseEntity.ok(response);
     }
     
     // 사용자 정보 수정

@@ -1,13 +1,18 @@
 package com.example.backend.config;
 
+import com.example.backend.security.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -18,9 +23,17 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
     
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
     
     @Bean
@@ -32,14 +45,14 @@ public class SecurityConfig {
             // CORS 설정
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             
-            // 세션 정책 - STATELESS
+            // 세션 정책 - STATELESS (JWT 사용)
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             
             // 권한 설정
             .authorizeHttpRequests(auth -> auth
-                // 회원가입, 로그인은 누구나 접근 가능
-                .requestMatchers("/api/users/register", "/api/users/login").permitAll()
+                // 인증 없이 접근 가능한 엔드포인트
+                .requestMatchers("/api/users/register", "/api/users/login", "/api/users/refresh").permitAll()
                 
                 // 조회 기능은 누구나 접근 가능
                 .requestMatchers("GET", "/api/articles/**").permitAll()
@@ -49,6 +62,9 @@ public class SecurityConfig {
                 // 나머지는 인증 필요
                 .anyRequest().authenticated()
             )
+            
+            // JWT 필터 추가
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             
             // HTTP Basic 인증 비활성화
             .httpBasic(basic -> basic.disable())
