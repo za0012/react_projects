@@ -34,19 +34,19 @@ const Signup = () => {
         <input
           type="text"
           placeholder="아이디를 입력하세요"
-          className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="input-style"
           onChange={e => setUsername(() => e.target.value)}
         />
         <input
           type="password"
           placeholder="비밀번호를 입력하세요"
-          className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="input-style"
           onChange={e => setPassword(() => e.target.value)}
         />
         <input
           type="email"
           placeholder="이메일을 입력하세요"
-          className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="input-style"
           onChange={e => setEmail(() => e.target.value)}
         />
         <button

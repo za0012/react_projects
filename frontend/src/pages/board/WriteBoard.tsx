@@ -1,35 +1,27 @@
-import ky from "ky";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ArticleWrite } from "@/types/board";
+import api from "@/types/ky";
 
 const WriteBoard = () => {
-  const [article, setArticle] = useState<ArticleWrite>({
-    title: "",
-    content: "",
-    username: 0,
-  });
-  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const fetchData = async (e: React.FormEvent<HTMLFormElement>) => {
+  const createArticle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log("send함수실행");
+      console.log("게시글 작성 요청 시작...");
       console.log("title", title);
       console.log("content", content);
 
-      const username = "임시";
-
-      const data = await ky
-        .post("http://localhost:8080/api/articles", {
+      const response = await api
+        .post("articles", {
           json: {
             title,
             content,
-            username: 1,
           },
         })
         .json<ArticleWrite>();
+      window.location.href = "/board";
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -39,7 +31,7 @@ const WriteBoard = () => {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 via-pink-100 to-yellow-100">
       <form
         className="w-full max-w-md space-y-4 rounded-xl bg-white p-8 shadow-lg"
-        onSubmit={fetchData}
+        onSubmit={createArticle}
       >
         <h2 className="mb-4 text-center text-2xl font-bold text-blue-600">
           게시글 작성

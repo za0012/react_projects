@@ -1,47 +1,73 @@
-import { Link, Navigate } from "@tanstack/react-router";
-import ky from "ky";
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { login, logout } from "@/types/authService";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const fetchData = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const isLoggedIn = !!token;
 
-    try {
-      const response = await ky
-        .post("http://localhost:8080/api/users/login", {
-          json: { username, password },
-        })
-        .json();
-      console.log(response);
-      window.location.href = "/";
-    } catch (error) {
-      console.log("로그인 오류: ", error);
-      alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
-    }
+  // const fetchData = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const response = await api
+  //       .post("users/login", {
+  //         json: { username, password },
+  //       })
+  //       .json();
+  //     console.log(response);
+
+  //     const accessToken = (response as any).accessToken;
+  //     const refreshToken = (response as any).refreshToken;
+
+  //     // Zustand 스토어에 저장
+  //     setToken(accessToken);
+  //     setRefreshToken(refreshToken);
+
+  //     // localStorage에도 저장
+  //     localStorage.setItem("accessToken", accessToken);
+  //     localStorage.setItem("refreshToken", refreshToken);
+
+  //     window.location.href = "/";
+  //   } catch (error) {
+  //     console.error("로그인 오류: ", error);
+  //     alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+  //   }
+  // };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await login(username, password);
+    window.location.href = "/";
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-100 via-pink-100 to-yellow-100">
       <form
         className="w-full max-w-sm space-y-4 rounded-xl bg-white p-8 shadow-lg"
-        onSubmit={fetchData}
+        onSubmit={handleLogin}
       >
         <h2 className="mb-4 text-center text-2xl font-bold text-blue-600">
           로그인
         </h2>
         <input
+          name="username"
           type="text"
           placeholder="아이디를 입력하세요"
-          className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="input-style"
           onChange={e => setUsername(() => e.target.value)}
         />
         <input
+          name="password"
           type="password"
           placeholder="비밀번호를 입력하세요"
-          className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="input-style"
           onChange={e => setPassword(() => e.target.value)}
         />
         <button
@@ -55,6 +81,9 @@ const Login = () => {
         <Link to="/auth/signup">
           <p className="text-blue-500 hover:underline">회원가입</p>
         </Link>
+        <p className="mt-4 text-center text-sm text-gray-600">
+          임시 id, password: setEmail/setEmail
+        </p>
       </div>
     </div>
   );

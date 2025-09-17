@@ -36,9 +36,13 @@ export interface ArticleListResponse {
 }
 
 export interface ArticleWrite {
+  id: number;
+  view_count: number;
   title: string;
   content: string;
-  username: number;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // type ApiResponse = {

@@ -12,7 +12,7 @@ const BoardDetail = () => {
     const fetchData = async () => {
       try {
         const data = await ky
-          .get(`http://localhost:8080/api/articles/${articleId}`)
+          .get(`http://localhost:8080/api/articles/${articleId.articleId}`)
           .json<Article>();
         console.log(data);
         setData(data);
@@ -27,7 +27,7 @@ const BoardDetail = () => {
     <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-blue-500 p-6 text-white shadow-lg">
       {data ? (
         <div className="rounded-lg bg-white p-6 text-gray-900 shadow">
-          <h1 className="mb-4 text-3xl font-bold text-blue-600">
+          <h1 className="mb-4 text-2xl font-bold text-blue-600">
             {data.title}
           </h1>
           <div className="mb-2 flex items-center gap-4 text-sm text-gray-500">
@@ -69,7 +69,7 @@ const BoardDetail = () => {
             </span>
           </div>
           <hr className="my-4" />
-          <div className="whitespace-pre-line text-lg leading-relaxed">
+          <div className="whitespace-pre-line text-base leading-relaxed">
             {data.content}
           </div>
         </div>
