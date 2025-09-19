@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 const CookieList = () => {
   const [page, setPage] = useState(0);
+  const [search, setSearch] = useState<CookieListResponse>();
+  const [searchValue, setSearchValue] = useState("");
   const [data, setData] = useState<CookieListResponse | null>(null);
 
   useEffect(() => {
@@ -22,63 +24,194 @@ const CookieList = () => {
     };
     fetchData();
   }, [page]);
-  return (
-    <div className="mx-auto mt-8 max-w-4xl p-4">
-      {data ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {data.content.map(item => (
-            <div
-              key={item.id}
-              className="overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-xl"
-            >
-              {/* 이미지 컨테이너 (예시: 이미지가 있다면) */}
-              {/* <div className="h-48 w-full bg-gray-200"></div> */}
 
-              <div className="p-6">
-                <h3 className="mb-2 text-2xl font-bold text-gray-800">
+  const handleSearch = async () => {
+    try {
+      const filterData = await ky
+        .get(
+          `http://localhost:8080/api/cookies/search?type=all&keyword=${searchValue}`,
+        )
+        .json<CookieListResponse>();
+      console.log(filterData);
+      setSearch(filterData);
+    } catch (error) {
+      console.error("검색 오류", error);
+    }
+  };
+  return (
+    <div className="mx-auto mt-10 max-w-3xl rounded-2xl bg-gradient-to-br from-pink-100 to-blue-100 p-8 shadow-xl">
+      {/* 검색창 */}
+      <div className="mb-8 flex items-center justify-center space-x-2">
+        <input
+          type="text"
+          placeholder="🍪 쿠키 이름을 입력하세요"
+          className="w-64 rounded-full border border-gray-300 px-4 py-2 text-sm shadow-sm focus:border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-200"
+          onChange={e => {
+            setSearchValue(() => e.target.value);
+          }}
+        />
+        <button
+          className="rounded-full bg-pink-500 px-5 py-2 text-sm font-semibold text-white shadow-md transition duration-200 hover:bg-pink-600"
+          onClick={handleSearch}
+        >
+          🔍 검색
+        </button>
+      </div>
+
+      {/* 쿠키 리스트 */}
+      {data ? (
+        !search ? (
+          <div className="space-y-6">
+            {data.content.map(item => (
+              <div
+                className="rounded-2xl bg-white p-6 shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-lg"
+                key={item.id}
+              >
+                <h2 className="mb-3 text-2xl font-bold text-[#2a3fff]">
                   {item.name}
-                </h3>
-                <p className="mb-1 text-gray-600">
-                  <strong className="font-semibold">체력:</strong> {item.health}
-                </p>
-                <p className="mb-1 text-gray-600">
-                  <strong className="font-semibold">능력:</strong>{" "}
-                  {item.ability}
-                </p>
-                <p className="mb-1 text-gray-600">
-                  <strong className="font-semibold">별사탕:</strong>{" "}
-                  {item.unlockStarCandies}
-                </p>
-                <p className="text-sm text-gray-500">
-                  <strong className="font-semibold">출시일:</strong>{" "}
-                  {item.releaseDate}
-                </p>
+                </h2>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      🩺 체력:
+                    </span>{" "}
+                    {item.health}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      ✨ 능력:
+                    </span>{" "}
+                    {item.ability || "없음"}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      ⭐ 별사탕:
+                    </span>{" "}
+                    {item.unlockStarCandies}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      👫 파트너:
+                    </span>{" "}
+                    {item.partner || "없음"}
+                  </p>
+                  <p className="col-span-2">
+                    <span className="font-semibold text-gray-900">
+                      📅 출시일:
+                    </span>{" "}
+                    {item.releaseDate}
+                  </p>
+                </div>
               </div>
+            ))}
+
+            {/* 페이지네이션 */}
+            <div className="mt-10 flex items-center justify-center space-x-6 text-sm text-gray-700">
+              <button
+                className="rounded-full bg-blue-500 px-5 py-2 font-semibold text-white shadow-md transition duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300"
+                onClick={() => setPage(prev => Math.max(prev - 1, 0))}
+                disabled={data.number === 0}
+              >
+                &gt; 이전
+              </button>
+
+              <span className="rounded-full bg-white px-4 py-2 shadow-inner">
+                📄 페이지{" "}
+                <span className="font-bold text-blue-500">
+                  {data.number + 1}
+                </span>{" "}
+                / {data.totalPages}
+              </span>
+
+              <button
+                className="rounded-full bg-blue-500 px-5 py-2 font-semibold text-white shadow-md transition duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300"
+                onClick={() =>
+                  setPage(prev => Math.min(prev + 1, data.totalPages - 1))
+                }
+                disabled={data.number + 1 >= data.totalPages}
+              >
+                다음 &gt;
+              </button>
             </div>
-          ))}
-          <div className="mt-6 text-center text-blue-600">
-            <button
-              className="rounded bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700"
-              onClick={() => {
-                setPage(prev => Math.min(prev - 1, 0));
-              }}
-            >
-              이전
-            </button>
-            <p>페이지 {data.number + 1}</p>
-            <button
-              className="rounded bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700"
-              onClick={() => {
-                setPage(prev => Math.min(prev + 1, data.totalPages - 1));
-              }}
-            >
-              다음
-            </button>
           </div>
-        </div>
+        ) : (
+          <div className="space-y-6">
+            {search.content.map(item => (
+              <div
+                className="rounded-2xl bg-white p-6 shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-lg"
+                key={item.id}
+              >
+                <h2 className="mb-3 text-2xl font-bold text-[#2a3fff]">
+                  {item.name}
+                </h2>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      🩺 체력:
+                    </span>{" "}
+                    {item.health}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      ✨ 능력:
+                    </span>{" "}
+                    {item.ability || "없음"}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      ⭐ 별사탕:
+                    </span>{" "}
+                    {item.unlockStarCandies}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-900">
+                      👫 파트너:
+                    </span>{" "}
+                    {item.partner || "없음"}
+                  </p>
+                  <p className="col-span-2">
+                    <span className="font-semibold text-gray-900">
+                      📅 출시일:
+                    </span>{" "}
+                    {item.releaseDate}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+            {/* 페이지네이션 */}
+            <div className="mt-10 flex items-center justify-center space-x-6 text-sm text-gray-700">
+              <button
+                className="rounded-full bg-blue-500 px-5 py-2 font-semibold text-white shadow-md transition duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300"
+                onClick={() => setPage(prev => Math.max(prev - 1, 0))}
+                disabled={data.number === 0}
+              >
+                &gt; 이전
+              </button>
+
+              <span className="rounded-full bg-white px-4 py-2 shadow-inner">
+                📄 페이지{" "}
+                <span className="font-bold text-blue-500">
+                  {data.number + 1}
+                </span>{" "}
+                / {data.totalPages}
+              </span>
+
+              <button
+                className="rounded-full bg-blue-500 px-5 py-2 font-semibold text-white shadow-md transition duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300"
+                onClick={() =>
+                  setPage(prev => Math.min(prev + 1, data.totalPages - 1))
+                }
+                disabled={data.number + 1 >= data.totalPages}
+              >
+                다음 &gt;
+              </button>
+            </div>
+          </div>
+        )
       ) : (
-        <div className="flex h-64 items-center justify-center rounded-lg bg-white shadow-md">
-          <div className="animate-pulse text-xl text-gray-600">Loading...</div>
+        <div className="py-12 text-center text-lg text-gray-600">
+          🍪 쿠키 데이터를 불러오는 중이에요...
         </div>
       )}
     </div>

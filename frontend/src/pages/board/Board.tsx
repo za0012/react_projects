@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ky from "ky";
 import { ArticleListResponse } from "@/types/board";
 import { Link } from "@tanstack/react-router";
