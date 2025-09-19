@@ -1,6 +1,7 @@
 import { CookieListResponse } from "@/types/cookie";
 import ky from "ky";
 import { useEffect, useState } from "react";
+import CookieListCard from "@/components/CookieListCard";
 
 const CookieList = () => {
   const [page, setPage] = useState(0);
@@ -63,46 +64,15 @@ const CookieList = () => {
         !search ? (
           <div className="space-y-6">
             {data.content.map(item => (
-              <div
-                className="rounded-2xl bg-white p-6 shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-lg"
-                key={item.id}
-              >
-                <h2 className="mb-3 text-2xl font-bold text-[#2a3fff]">
-                  {item.name}
-                </h2>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      🩺 체력:
-                    </span>{" "}
-                    {item.health}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      ✨ 능력:
-                    </span>{" "}
-                    {item.ability || "없음"}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      ⭐ 별사탕:
-                    </span>{" "}
-                    {item.unlockStarCandies}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      👫 파트너:
-                    </span>{" "}
-                    {item.partner || "없음"}
-                  </p>
-                  <p className="col-span-2">
-                    <span className="font-semibold text-gray-900">
-                      📅 출시일:
-                    </span>{" "}
-                    {item.releaseDate}
-                  </p>
-                </div>
-              </div>
+              <CookieListCard
+                id={item.id}
+                name={item.name}
+                health={item.health}
+                ability={item.ability}
+                unlockStarCandies={item.unlockStarCandies}
+                partner={item.partner}
+                releaseDate={item.releaseDate}
+              />
             ))}
 
             {/* 페이지네이션 */}
@@ -137,46 +107,15 @@ const CookieList = () => {
         ) : (
           <div className="space-y-6">
             {search.content.map(item => (
-              <div
-                className="rounded-2xl bg-white p-6 shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-lg"
-                key={item.id}
-              >
-                <h2 className="mb-3 text-2xl font-bold text-[#2a3fff]">
-                  {item.name}
-                </h2>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      🩺 체력:
-                    </span>{" "}
-                    {item.health}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      ✨ 능력:
-                    </span>{" "}
-                    {item.ability || "없음"}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      ⭐ 별사탕:
-                    </span>{" "}
-                    {item.unlockStarCandies}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-900">
-                      👫 파트너:
-                    </span>{" "}
-                    {item.partner || "없음"}
-                  </p>
-                  <p className="col-span-2">
-                    <span className="font-semibold text-gray-900">
-                      📅 출시일:
-                    </span>{" "}
-                    {item.releaseDate}
-                  </p>
-                </div>
-              </div>
+              <CookieListCard
+                id={item.id}
+                name={item.name}
+                health={item.health}
+                ability={item.ability}
+                unlockStarCandies={item.unlockStarCandies}
+                partner={item.partner}
+                releaseDate={item.releaseDate}
+              />
             ))}
 
             {/* 페이지네이션 */}
@@ -194,13 +133,18 @@ const CookieList = () => {
                 <span className="font-bold text-blue-500">
                   {data.number + 1}
                 </span>{" "}
-                / {data.totalPages}
+                / {!search ? data.totalPages : search.totalPages}
               </span>
 
               <button
                 className="rounded-full bg-blue-500 px-5 py-2 font-semibold text-white shadow-md transition duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300"
                 onClick={() =>
-                  setPage(prev => Math.min(prev + 1, data.totalPages - 1))
+                  setPage(prev =>
+                    Math.min(
+                      prev + 1,
+                      !search ? data.totalPages - 1 : search.totalPages - 1,
+                    ),
+                  )
                 }
                 disabled={data.number + 1 >= data.totalPages}
               >
