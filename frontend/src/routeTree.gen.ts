@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CookieIndexRouteImport } from './routes/cookie/index'
 import { Route as BoardIndexRouteImport } from './routes/board/index'
+import { Route as StrategyCookietierRouteImport } from './routes/strategy/cookietier'
 import { Route as BoardWriteRouteImport } from './routes/board/write'
 import { Route as BoardArticleIdRouteImport } from './routes/board/$articleId'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
@@ -27,9 +29,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookieIndexRoute = CookieIndexRouteImport.update({
+  id: '/cookie/',
+  path: '/cookie/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BoardIndexRoute = BoardIndexRouteImport.update({
   id: '/board/',
   path: '/board/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StrategyCookietierRoute = StrategyCookietierRouteImport.update({
+  id: '/strategy/cookietier',
+  path: '/strategy/cookietier',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BoardWriteRoute = BoardWriteRouteImport.update({
@@ -60,7 +72,9 @@ export interface FileRoutesByFullPath {
   '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
+  '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
+  '/cookie': typeof CookieIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,7 +83,9 @@ export interface FileRoutesByTo {
   '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
+  '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
+  '/cookie': typeof CookieIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,7 +95,9 @@ export interface FileRoutesById {
   '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
+  '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board/': typeof BoardIndexRoute
+  '/cookie/': typeof CookieIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -90,7 +108,9 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
+    | '/strategy/cookietier'
     | '/board'
+    | '/cookie'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -99,7 +119,9 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
+    | '/strategy/cookietier'
     | '/board'
+    | '/cookie'
   id:
     | '__root__'
     | '/'
@@ -108,7 +130,9 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
+    | '/strategy/cookietier'
     | '/board/'
+    | '/cookie/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -118,7 +142,9 @@ export interface RootRouteChildren {
   AuthSignupRoute: typeof AuthSignupRoute
   BoardArticleIdRoute: typeof BoardArticleIdRoute
   BoardWriteRoute: typeof BoardWriteRoute
+  StrategyCookietierRoute: typeof StrategyCookietierRoute
   BoardIndexRoute: typeof BoardIndexRoute
+  CookieIndexRoute: typeof CookieIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -137,11 +163,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookie/': {
+      id: '/cookie/'
+      path: '/cookie'
+      fullPath: '/cookie'
+      preLoaderRoute: typeof CookieIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/board/': {
       id: '/board/'
       path: '/board'
       fullPath: '/board'
       preLoaderRoute: typeof BoardIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/strategy/cookietier': {
+      id: '/strategy/cookietier'
+      path: '/strategy/cookietier'
+      fullPath: '/strategy/cookietier'
+      preLoaderRoute: typeof StrategyCookietierRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/board/write': {
@@ -182,7 +222,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignupRoute: AuthSignupRoute,
   BoardArticleIdRoute: BoardArticleIdRoute,
   BoardWriteRoute: BoardWriteRoute,
+  StrategyCookietierRoute: StrategyCookietierRoute,
   BoardIndexRoute: BoardIndexRoute,
+  CookieIndexRoute: CookieIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
