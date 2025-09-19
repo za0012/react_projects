@@ -58,6 +58,8 @@ public class SecurityConfig {
                 .requestMatchers("GET", "/api/articles/**").permitAll()
                 .requestMatchers("GET", "/api/comments/**").permitAll()
                 .requestMatchers("GET", "/api/users/check/**").permitAll()
+                .requestMatchers("GET", "/api/cookies/**").permitAll()
+                .requestMatchers("GET", "/api/pets/**").permitAll()
                 
                 // 나머지는 인증 필요
                 .anyRequest().authenticated()
