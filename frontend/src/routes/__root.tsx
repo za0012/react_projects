@@ -32,6 +32,14 @@ const Header = () => {
               소개
             </Link>
           </li>
+          <li>
+            <Link
+              to="/cookie"
+              className="text-lg font-semibold text-gray-700 transition hover:text-pink-600"
+            >
+              쿠키들
+            </Link>
+          </li>
         </ul>
       </nav>
       <Link to="/" className="flex flex-1 justify-center">
@@ -39,12 +47,15 @@ const Header = () => {
       </Link>
       <div className="flex items-center">
         {isLoggedIn ? (
-          <button
-            className="ml-4 rounded-lg bg-white px-5 py-2 font-bold text-blue-600 shadow-sm transition hover:bg-blue-100 hover:text-blue-800"
-            onClick={handleLogout}
-          >
-            로그아웃
-          </button>
+          <div className="flex flex-row items-center">
+            <p>웰컴 {user?.username}</p>
+            <button
+              className="ml-4 rounded-lg bg-white px-5 py-2 font-bold text-blue-600 shadow-sm transition hover:bg-blue-100 hover:text-blue-800"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </button>
+          </div>
         ) : (
           <Link to="/auth/login">
             <button className="ml-4 rounded-lg bg-white px-5 py-2 font-bold text-blue-600 shadow-sm transition hover:bg-blue-100 hover:text-blue-800">
@@ -69,3 +80,13 @@ export const Route = createRootRoute({
     </div>
   ),
 });
+
+const Heade2r = () => {
+  return (
+    <>
+      <div>
+        <p></p>
+      </div>
+    </>
+  );
+};
