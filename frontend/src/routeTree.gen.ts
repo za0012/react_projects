@@ -20,6 +20,12 @@ import { Route as BoardWriteRouteImport } from './routes/board/write'
 import { Route as BoardArticleIdRouteImport } from './routes/board/$articleId'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
+import { Route as NewUserGuideGuidesRecommendCookieRouteImport } from './routes/newUserGuide/guides/recommendCookie'
+import { Route as NewUserGuideGuidesGetCoinRouteImport } from './routes/newUserGuide/guides/getCoin'
+import { Route as NewUserGuideGuidesAboutLegendaryRouteImport } from './routes/newUserGuide/guides/aboutLegendary'
+import { Route as NewUserGuideGuidesAboutGemRouteImport } from './routes/newUserGuide/guides/aboutGem'
+import { Route as NewUserGuideGuidesAboutCrystalRouteImport } from './routes/newUserGuide/guides/aboutCrystal'
+import { Route as NewUserGuideGuidesAboutBoxRouteImport } from './routes/newUserGuide/guides/aboutBox'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -76,6 +82,42 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewUserGuideGuidesRecommendCookieRoute =
+  NewUserGuideGuidesRecommendCookieRouteImport.update({
+    id: '/newUserGuide/guides/recommendCookie',
+    path: '/newUserGuide/guides/recommendCookie',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const NewUserGuideGuidesGetCoinRoute =
+  NewUserGuideGuidesGetCoinRouteImport.update({
+    id: '/newUserGuide/guides/getCoin',
+    path: '/newUserGuide/guides/getCoin',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const NewUserGuideGuidesAboutLegendaryRoute =
+  NewUserGuideGuidesAboutLegendaryRouteImport.update({
+    id: '/newUserGuide/guides/aboutLegendary',
+    path: '/newUserGuide/guides/aboutLegendary',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const NewUserGuideGuidesAboutGemRoute =
+  NewUserGuideGuidesAboutGemRouteImport.update({
+    id: '/newUserGuide/guides/aboutGem',
+    path: '/newUserGuide/guides/aboutGem',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const NewUserGuideGuidesAboutCrystalRoute =
+  NewUserGuideGuidesAboutCrystalRouteImport.update({
+    id: '/newUserGuide/guides/aboutCrystal',
+    path: '/newUserGuide/guides/aboutCrystal',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const NewUserGuideGuidesAboutBoxRoute =
+  NewUserGuideGuidesAboutBoxRouteImport.update({
+    id: '/newUserGuide/guides/aboutBox',
+    path: '/newUserGuide/guides/aboutBox',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +131,12 @@ export interface FileRoutesByFullPath {
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
   '/cookie': typeof CookieIndexRoute
+  '/newUserGuide/guides/aboutBox': typeof NewUserGuideGuidesAboutBoxRoute
+  '/newUserGuide/guides/aboutCrystal': typeof NewUserGuideGuidesAboutCrystalRoute
+  '/newUserGuide/guides/aboutGem': typeof NewUserGuideGuidesAboutGemRoute
+  '/newUserGuide/guides/aboutLegendary': typeof NewUserGuideGuidesAboutLegendaryRoute
+  '/newUserGuide/guides/getCoin': typeof NewUserGuideGuidesGetCoinRoute
+  '/newUserGuide/guides/recommendCookie': typeof NewUserGuideGuidesRecommendCookieRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +150,12 @@ export interface FileRoutesByTo {
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
   '/cookie': typeof CookieIndexRoute
+  '/newUserGuide/guides/aboutBox': typeof NewUserGuideGuidesAboutBoxRoute
+  '/newUserGuide/guides/aboutCrystal': typeof NewUserGuideGuidesAboutCrystalRoute
+  '/newUserGuide/guides/aboutGem': typeof NewUserGuideGuidesAboutGemRoute
+  '/newUserGuide/guides/aboutLegendary': typeof NewUserGuideGuidesAboutLegendaryRoute
+  '/newUserGuide/guides/getCoin': typeof NewUserGuideGuidesGetCoinRoute
+  '/newUserGuide/guides/recommendCookie': typeof NewUserGuideGuidesRecommendCookieRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +170,12 @@ export interface FileRoutesById {
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board/': typeof BoardIndexRoute
   '/cookie/': typeof CookieIndexRoute
+  '/newUserGuide/guides/aboutBox': typeof NewUserGuideGuidesAboutBoxRoute
+  '/newUserGuide/guides/aboutCrystal': typeof NewUserGuideGuidesAboutCrystalRoute
+  '/newUserGuide/guides/aboutGem': typeof NewUserGuideGuidesAboutGemRoute
+  '/newUserGuide/guides/aboutLegendary': typeof NewUserGuideGuidesAboutLegendaryRoute
+  '/newUserGuide/guides/getCoin': typeof NewUserGuideGuidesGetCoinRoute
+  '/newUserGuide/guides/recommendCookie': typeof NewUserGuideGuidesRecommendCookieRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +191,12 @@ export interface FileRouteTypes {
     | '/strategy/cookietier'
     | '/board'
     | '/cookie'
+    | '/newUserGuide/guides/aboutBox'
+    | '/newUserGuide/guides/aboutCrystal'
+    | '/newUserGuide/guides/aboutGem'
+    | '/newUserGuide/guides/aboutLegendary'
+    | '/newUserGuide/guides/getCoin'
+    | '/newUserGuide/guides/recommendCookie'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +210,12 @@ export interface FileRouteTypes {
     | '/strategy/cookietier'
     | '/board'
     | '/cookie'
+    | '/newUserGuide/guides/aboutBox'
+    | '/newUserGuide/guides/aboutCrystal'
+    | '/newUserGuide/guides/aboutGem'
+    | '/newUserGuide/guides/aboutLegendary'
+    | '/newUserGuide/guides/getCoin'
+    | '/newUserGuide/guides/recommendCookie'
   id:
     | '__root__'
     | '/'
@@ -157,6 +229,12 @@ export interface FileRouteTypes {
     | '/strategy/cookietier'
     | '/board/'
     | '/cookie/'
+    | '/newUserGuide/guides/aboutBox'
+    | '/newUserGuide/guides/aboutCrystal'
+    | '/newUserGuide/guides/aboutGem'
+    | '/newUserGuide/guides/aboutLegendary'
+    | '/newUserGuide/guides/getCoin'
+    | '/newUserGuide/guides/recommendCookie'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +249,12 @@ export interface RootRouteChildren {
   StrategyCookietierRoute: typeof StrategyCookietierRoute
   BoardIndexRoute: typeof BoardIndexRoute
   CookieIndexRoute: typeof CookieIndexRoute
+  NewUserGuideGuidesAboutBoxRoute: typeof NewUserGuideGuidesAboutBoxRoute
+  NewUserGuideGuidesAboutCrystalRoute: typeof NewUserGuideGuidesAboutCrystalRoute
+  NewUserGuideGuidesAboutGemRoute: typeof NewUserGuideGuidesAboutGemRoute
+  NewUserGuideGuidesAboutLegendaryRoute: typeof NewUserGuideGuidesAboutLegendaryRoute
+  NewUserGuideGuidesGetCoinRoute: typeof NewUserGuideGuidesGetCoinRoute
+  NewUserGuideGuidesRecommendCookieRoute: typeof NewUserGuideGuidesRecommendCookieRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +336,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newUserGuide/guides/recommendCookie': {
+      id: '/newUserGuide/guides/recommendCookie'
+      path: '/newUserGuide/guides/recommendCookie'
+      fullPath: '/newUserGuide/guides/recommendCookie'
+      preLoaderRoute: typeof NewUserGuideGuidesRecommendCookieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newUserGuide/guides/getCoin': {
+      id: '/newUserGuide/guides/getCoin'
+      path: '/newUserGuide/guides/getCoin'
+      fullPath: '/newUserGuide/guides/getCoin'
+      preLoaderRoute: typeof NewUserGuideGuidesGetCoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newUserGuide/guides/aboutLegendary': {
+      id: '/newUserGuide/guides/aboutLegendary'
+      path: '/newUserGuide/guides/aboutLegendary'
+      fullPath: '/newUserGuide/guides/aboutLegendary'
+      preLoaderRoute: typeof NewUserGuideGuidesAboutLegendaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newUserGuide/guides/aboutGem': {
+      id: '/newUserGuide/guides/aboutGem'
+      path: '/newUserGuide/guides/aboutGem'
+      fullPath: '/newUserGuide/guides/aboutGem'
+      preLoaderRoute: typeof NewUserGuideGuidesAboutGemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newUserGuide/guides/aboutCrystal': {
+      id: '/newUserGuide/guides/aboutCrystal'
+      path: '/newUserGuide/guides/aboutCrystal'
+      fullPath: '/newUserGuide/guides/aboutCrystal'
+      preLoaderRoute: typeof NewUserGuideGuidesAboutCrystalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newUserGuide/guides/aboutBox': {
+      id: '/newUserGuide/guides/aboutBox'
+      path: '/newUserGuide/guides/aboutBox'
+      fullPath: '/newUserGuide/guides/aboutBox'
+      preLoaderRoute: typeof NewUserGuideGuidesAboutBoxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,6 +393,13 @@ const rootRouteChildren: RootRouteChildren = {
   StrategyCookietierRoute: StrategyCookietierRoute,
   BoardIndexRoute: BoardIndexRoute,
   CookieIndexRoute: CookieIndexRoute,
+  NewUserGuideGuidesAboutBoxRoute: NewUserGuideGuidesAboutBoxRoute,
+  NewUserGuideGuidesAboutCrystalRoute: NewUserGuideGuidesAboutCrystalRoute,
+  NewUserGuideGuidesAboutGemRoute: NewUserGuideGuidesAboutGemRoute,
+  NewUserGuideGuidesAboutLegendaryRoute: NewUserGuideGuidesAboutLegendaryRoute,
+  NewUserGuideGuidesGetCoinRoute: NewUserGuideGuidesGetCoinRoute,
+  NewUserGuideGuidesRecommendCookieRoute:
+    NewUserGuideGuidesRecommendCookieRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
