@@ -90,12 +90,13 @@
 # 패키지 관련
 
     1. 기존에는 yarn을 사용하였으나, pnpm으로 변경
-        - yarn을 쓰다 보니 생긴 문제점이 node_modules가 차지하는 공간이 너무 크다는 것이었다. 이미 많은 프로젝트를 많든 내 집컴은 저장공간이 많이 없었기 때문에 다른 모듈을 써야겠다는 생각이 들었다.
+        - yarn을 쓰다 보니 생긴 문제점이 의존성 중복으로 인해 node_modules가 차지하는 공간이 너무 크다는 것이었다. 이미 많은 프로젝트를 많든 컴은 저장공간이 많이 없었기 때문에 다른 모듈을 써야겠다는 생각이 들었다.
         - 모노레포에 관련하여 찾아보다가 yarn berry에 알게 됨.
           초기에는 PnP라는 yarn berry의 강력한 장점이 있어 yarn berry를 사용하여 마이그레이션 하려 했으나
-          PnP를 지원하지 않는 패키지가 존재한다는 점과, Yarn PnP가 Git에 지속적으로 주는 부하, zero-install로 인해 추후 발생하게 될 문제들 때문에 yarn berry가 아닌 pnpm으로 바꿨다. (위의 이유와 더불어서)
+          PnP를 지원하지 않는 패키지가 존재한다는 점과, Yarn PnP가 Git에 지속적으로 주는 부하, zero-install로 인해 추후 발생하게 될 문제들 때문에 yarn berry가 아닌 pnpm으로 바꿨다. 또한 팬텀 종속성 방지와 디스크 효율성의 이유로도 pnpm을 사용
           참조: https://velog.io/@imeureka/Yarn-berry-Pnpm-%EC%96%B4%EB%96%A8-%EB%95%8C-%EC%8D%A8%EC%95%BC%ED%95%98%EB%8A%94%EA%B0%80
                 https://hackle.io/ko/post/frontend-pnpm/
+                https://betterstack.com/community/guides/scaling-nodejs/pnpm-vs-bun-install-vs-yarn/
 
 {
 "src": "logo192.png",

@@ -2,11 +2,11 @@
 export interface CookieResponse {
   success: boolean;
   message: string;
-  data: CookieDetail;
+  data: CookieDetails;
 }
 
 // 쿠키 상세 정보
-export interface CookieDetail {
+export type CookieDetails = {
   id: number;
   name: string;
   imageUrl: string;
@@ -20,11 +20,11 @@ export interface CookieDetail {
   rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY" | "SPECIAL";
   type: "BALANCE" | "SPEED" | "CHARGE" | "FLY" | "JUMP";
   description: string;
-}
+};
 
 // 쿠키 리스트 조회 결과
 export interface CookieListResponse {
-  content: CookieDetail[];
+  content: CookieDetails[];
   pageable: Pageable;
   totalElements: number;
   totalPages: number;
