@@ -5,5 +5,5 @@ export const Route = createFileRoute("/strategy/cookietier")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/strategy/cookie"!</div>;
+  return <div>흥</div>;
 }

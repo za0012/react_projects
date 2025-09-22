@@ -1,9 +1,6 @@
-// import { createFileRoute } from "@tanstack/react-router";
-// import BoardDetail from "../../pages/board/BoardDetail";
+import { createFileRoute } from "@tanstack/react-router";
+import CookieDetail from "@/pages/cookie/CookieDetail";
 
-// export const Route = createFileRoute("/cookie/$articleId")({
-//   component: () => {
-//     const { articleId } = Route.useParams();
-//     return <BoardDetail articleId={articleId} />;
-//   },
-// });
+export const Route = createFileRoute("/cookie/$articleId")({
+  component: CookieDetail,
+});
