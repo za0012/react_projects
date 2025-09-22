@@ -85,25 +85,29 @@ const CookieList = () => {
         {data && (
           <div className="mt-12 flex items-center justify-center space-x-4 text-base text-gray-600">
             <button
-              className="rounded-full bg-white px-6 py-3 font-semibold text-gray-700 shadow-md transition duration-200 hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+              className="rounded-full bg-white px-6 py-2 font-semibold text-gray-700 shadow-md transition duration-200 hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
               onClick={() => setPage(prev => Math.max(prev - 1, 0))}
-              disabled={data?.number === 0}
+              disabled={(!search ? data : search).number === 0}
             >
               이전
             </button>
             <span className="rounded-full bg-white px-5 py-3 text-base font-medium shadow-sm">
               페이지{" "}
               <span className="font-bold text-blue-500">
-                {data?.number + 1}
+                {(!search ? data : search).number + 1}
               </span>
-              / {data?.totalPages}
+              / {(!search ? data : search).totalPages}
             </span>
             <button
-              className="rounded-full bg-white px-6 py-3 font-semibold text-gray-700 shadow-md transition duration-200 hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+              className="rounded-full bg-white px-6 py-2 font-semibold text-gray-700 shadow-md transition duration-200 hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
               onClick={() =>
-                setPage(prev => Math.min(prev + 1, (data?.totalPages || 1) - 1))
+                setPage(prev =>
+                  Math.min(prev + 1, (!search ? data : search).totalPages - 1),
+                )
               }
-              disabled={data?.number + 1 >= (data?.totalPages || 1)}
+              disabled={
+                data?.number + 1 >= (!search ? data : search).totalPages
+              }
             >
               다음
             </button>

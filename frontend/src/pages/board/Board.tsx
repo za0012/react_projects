@@ -126,8 +126,11 @@ const Board = () => {
               / {data?.totalPages}
             </span>
             <button
-              onClick={() =>
-                setPage(prev => Math.min(prev + 1, (data?.totalPages || 1) - 1))
+              onClick={
+                () =>
+                  setPage(prev =>
+                    Math.min(prev + 1, (data?.totalPages || 1) - 1),
+                  ) //주어진 숫자 중 가장 작은 수 반환, 0부터 시작해서 totalPages-1까지 가능
               }
               className="rounded-full bg-white px-5 py-2 font-semibold text-gray-700 shadow-sm transition duration-200 hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
               disabled={data?.number + 1 >= (data?.totalPages || 1)}
