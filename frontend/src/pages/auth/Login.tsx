@@ -1,50 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { login, logout } from "@/types/authService";
+import { login } from "@/types/authService";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // const isLoggedIn = !!token;
-
-  // const fetchData = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const response = await api
-  //       .post("users/login", {
-  //         json: { username, password },
-  //       })
-  //       .json();
-  //     console.log(response);
-
-  //     const accessToken = (response as any).accessToken;
-  //     const refreshToken = (response as any).refreshToken;
-
-  //     // Zustand 스토어에 저장
-  //     setToken(accessToken);
-  //     setRefreshToken(refreshToken);
-
-  //     // localStorage에도 저장
-  //     localStorage.setItem("accessToken", accessToken);
-  //     localStorage.setItem("refreshToken", refreshToken);
-
-  //     window.location.href = "/";
-  //   } catch (error) {
-  //     console.error("로그인 오류: ", error);
-  //     alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
-  //   }
-  // };
-
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await login(username, password);
     window.location.href = "/";
-  };
-
-  const handleLogout = () => {
-    logout();
   };
 
   return (

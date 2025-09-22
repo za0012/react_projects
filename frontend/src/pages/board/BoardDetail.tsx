@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Article } from "@/types/board";
 import ky from "ky";
 import { useParams } from "@tanstack/react-router";
@@ -6,13 +6,13 @@ import { useParams } from "@tanstack/react-router";
 const BoardDetail = () => {
   const [data, setData] = useState<Article | null>(null);
 
-  const articleId = useParams({ from: "/board/$articleId" });
+  const { articleId } = useParams({ from: "/board/$articleId" });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await ky
-          .get(`http://localhost:8080/api/articles/${articleId.articleId}`)
+          .get(`http://localhost:8080/api/articles/${articleId}`)
           .json<Article>();
         console.log(data);
         setData(data);
