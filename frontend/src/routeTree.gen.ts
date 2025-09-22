@@ -14,6 +14,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CookieIndexRouteImport } from './routes/cookie/index'
 import { Route as BoardIndexRouteImport } from './routes/board/index'
 import { Route as StrategyCookietierRouteImport } from './routes/strategy/cookietier'
+import { Route as NewUserGuideListRouteImport } from './routes/newUserGuide/list'
+import { Route as CookieArticleIdRouteImport } from './routes/cookie/$articleId'
 import { Route as BoardWriteRouteImport } from './routes/board/write'
 import { Route as BoardArticleIdRouteImport } from './routes/board/$articleId'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
@@ -44,6 +46,16 @@ const StrategyCookietierRoute = StrategyCookietierRouteImport.update({
   path: '/strategy/cookietier',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewUserGuideListRoute = NewUserGuideListRouteImport.update({
+  id: '/newUserGuide/list',
+  path: '/newUserGuide/list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookieArticleIdRoute = CookieArticleIdRouteImport.update({
+  id: '/cookie/$articleId',
+  path: '/cookie/$articleId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BoardWriteRoute = BoardWriteRouteImport.update({
   id: '/board/write',
   path: '/board/write',
@@ -72,6 +84,8 @@ export interface FileRoutesByFullPath {
   '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
+  '/cookie/$articleId': typeof CookieArticleIdRoute
+  '/newUserGuide/list': typeof NewUserGuideListRoute
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
   '/cookie': typeof CookieIndexRoute
@@ -83,6 +97,8 @@ export interface FileRoutesByTo {
   '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
+  '/cookie/$articleId': typeof CookieArticleIdRoute
+  '/newUserGuide/list': typeof NewUserGuideListRoute
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
   '/cookie': typeof CookieIndexRoute
@@ -95,6 +111,8 @@ export interface FileRoutesById {
   '/auth/signup': typeof AuthSignupRoute
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
+  '/cookie/$articleId': typeof CookieArticleIdRoute
+  '/newUserGuide/list': typeof NewUserGuideListRoute
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board/': typeof BoardIndexRoute
   '/cookie/': typeof CookieIndexRoute
@@ -108,6 +126,8 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
+    | '/cookie/$articleId'
+    | '/newUserGuide/list'
     | '/strategy/cookietier'
     | '/board'
     | '/cookie'
@@ -119,6 +139,8 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
+    | '/cookie/$articleId'
+    | '/newUserGuide/list'
     | '/strategy/cookietier'
     | '/board'
     | '/cookie'
@@ -130,6 +152,8 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/board/$articleId'
     | '/board/write'
+    | '/cookie/$articleId'
+    | '/newUserGuide/list'
     | '/strategy/cookietier'
     | '/board/'
     | '/cookie/'
@@ -142,6 +166,8 @@ export interface RootRouteChildren {
   AuthSignupRoute: typeof AuthSignupRoute
   BoardArticleIdRoute: typeof BoardArticleIdRoute
   BoardWriteRoute: typeof BoardWriteRoute
+  CookieArticleIdRoute: typeof CookieArticleIdRoute
+  NewUserGuideListRoute: typeof NewUserGuideListRoute
   StrategyCookietierRoute: typeof StrategyCookietierRoute
   BoardIndexRoute: typeof BoardIndexRoute
   CookieIndexRoute: typeof CookieIndexRoute
@@ -184,6 +210,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StrategyCookietierRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newUserGuide/list': {
+      id: '/newUserGuide/list'
+      path: '/newUserGuide/list'
+      fullPath: '/newUserGuide/list'
+      preLoaderRoute: typeof NewUserGuideListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookie/$articleId': {
+      id: '/cookie/$articleId'
+      path: '/cookie/$articleId'
+      fullPath: '/cookie/$articleId'
+      preLoaderRoute: typeof CookieArticleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/board/write': {
       id: '/board/write'
       path: '/board/write'
@@ -222,6 +262,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignupRoute: AuthSignupRoute,
   BoardArticleIdRoute: BoardArticleIdRoute,
   BoardWriteRoute: BoardWriteRoute,
+  CookieArticleIdRoute: CookieArticleIdRoute,
+  NewUserGuideListRoute: NewUserGuideListRoute,
   StrategyCookietierRoute: StrategyCookietierRoute,
   BoardIndexRoute: BoardIndexRoute,
   CookieIndexRoute: CookieIndexRoute,

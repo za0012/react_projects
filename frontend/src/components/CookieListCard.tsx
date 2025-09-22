@@ -1,7 +1,7 @@
-import React from "react";
-import { CookieDetail } from "@/types/cookie";
+import { CookieDetails } from "@/types/cookie";
+import { Link } from "@tanstack/react-router";
 
-interface CookieDetails {
+interface CookieDetail {
   id: number;
   name: string;
   //   imageUrl: string;
@@ -19,31 +19,33 @@ const CookieListCard = ({
   unlockStarCandies,
   partner,
   releaseDate,
-}: CookieDetails) => {
+}: CookieDetail) => {
   return (
     <div
-      className="rounded-2xl bg-white p-6 shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-lg"
+      className="rounded-2xl bg-white p-6 shadow-sm transition duration-300 hover:shadow-lg"
       key={id}
     >
-      <h2 className="mb-3 text-2xl font-bold text-[#2a3fff]">{name}</h2>
-      <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">
+      <Link to="/cookie/$articleId" params={{ articleId: String(id) }}>
+        <h2 className="mb-3 text-2xl font-bold text-gray-800">{name}</h2>
+      </Link>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-600">
         <p>
-          <span className="font-semibold text-gray-900">🩺 체력:</span> {health}
+          <span className="font-semibold text-gray-800">💖 체력:</span> {health}
         </p>
         <p>
-          <span className="font-semibold text-gray-900">✨ 능력:</span>{" "}
+          <span className="font-semibold text-gray-800">✨ 능력:</span>{" "}
           {ability || "없음"}
         </p>
         <p>
-          <span className="font-semibold text-gray-900">⭐ 별사탕:</span>{" "}
+          <span className="font-semibold text-gray-800">🍬 별사탕:</span>{" "}
           {unlockStarCandies}
         </p>
         <p>
-          <span className="font-semibold text-gray-900">👫 파트너:</span>{" "}
+          <span className="font-semibold text-gray-800">🐾 짝꿍:</span>{" "}
           {partner || "없음"}
         </p>
         <p className="col-span-2">
-          <span className="font-semibold text-gray-900">📅 출시일:</span>{" "}
+          <span className="font-semibold text-gray-800">📅 출시일:</span>{" "}
           {releaseDate}
         </p>
       </div>
