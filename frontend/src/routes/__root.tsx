@@ -55,6 +55,16 @@ const Header = () => {
               뉴비 공략집
             </Link>
           </li>
+          {user?.admin ? (
+            <li>
+              <Link
+                to="/management"
+                className="text-lg font-semibold text-gray-500 transition hover:text-blue-500"
+              >
+                사이트 관리
+              </Link>
+            </li>
+          ) : null}
         </ul>
       </nav>
 
