@@ -5,7 +5,11 @@ import com.example.backend.entity.PetRarity;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor //기본 생성자 자동 생성
 public class PetDto {
     private Long id;
     
@@ -18,9 +22,6 @@ public class PetDto {
     private LocalDate releaseDate;
     private String description;
     private List<String> cookieNames; // 이 펫을 가진 쿠키들의 이름
-    
-    // 기본 생성자
-    public PetDto() {}
     
     // 전체 생성자
     public PetDto(Long id, String name, String imageUrl, String ability, PetRarity rarity,
@@ -67,29 +68,5 @@ public class PetDto {
         pet.setDescription(this.description);
         return pet;
     }
-    
-    // Getter & Setter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-    
-    public String getAbility() { return ability; }
-    public void setAbility(String ability) { this.ability = ability; }
-    
-    public PetRarity getRarity() { return rarity; }
-    public void setRarity(PetRarity rarity) { this.rarity = rarity; }
-    
-    public LocalDate getReleaseDate() { return releaseDate; }
-    public void setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; }
-    
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    
-    public List<String> getCookieNames() { return cookieNames; }
-    public void setCookieNames(List<String> cookieNames) { this.cookieNames = cookieNames; }
+
 }

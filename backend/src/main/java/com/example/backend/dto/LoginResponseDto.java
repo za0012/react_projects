@@ -1,5 +1,10 @@
 package com.example.backend.dto;
+import lombok.*;
+import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor //기본 생성자 자동 생성
 public class LoginResponseDto {
     private String accessToken;
     private String refreshToken;
@@ -7,9 +12,13 @@ public class LoginResponseDto {
     private Long expiresIn;
     private UserDto user;
     
-    // 기본 생성자
-    public LoginResponseDto() {}
-    
+    // 추가된 필드들 - 프론트엔드에서 권한 판단용
+    private Set<String> roles;          // 사용자의 모든 역할
+    private Set<String> permissions;    // 사용자의 모든 권한
+    private boolean isAdmin;            // 관리자 여부
+    private boolean isManager;          // 매니저 여부
+    private String highestRole;         // 최고 권한 역할
+
     // 생성자
     public LoginResponseDto(String accessToken, String refreshToken, String tokenType, 
                            Long expiresIn, UserDto user) {
@@ -18,21 +27,42 @@ public class LoginResponseDto {
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;
         this.user = user;
+        
+        // user 객체에서 역할/권한 정보 추출
+        if (user != null) {
+            this.roles = user.getRoles();
+            this.permissions = user.getPermissions();
+            this.isAdmin = user.hasRole("ROLE_ADMIN");
+            this.isManager = user.hasRole("ROLE_MANAGER");
+            this.highestRole = determineHighestRole(user);
+        }
     }
     
-    // Getter & Setter
-    public String getAccessToken() { return accessToken; }
-    public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
+    // 최고 권한 역할 결정
+    private String determineHighestRole(UserDto user) {
+        if (user.hasRole("ROLE_ADMIN")) {
+            return "ADMIN";
+        } else if (user.hasRole("ROLE_MANAGER")) {
+            return "MANAGER";
+        } else if (user.hasRole("ROLE_USER")) {
+            return "USER";
+        }
+        return "GUEST";
+    }
     
-    public String getRefreshToken() { return refreshToken; }
-    public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+    // 권한 체크 메서드들
+    public boolean canManageCookies() {
+        return permissions != null && (
+            permissions.contains("MANAGE_COOKIES") || 
+            permissions.contains("WRITE_COOKIES")
+        );
+    }
     
-    public String getTokenType() { return tokenType; }
-    public void setTokenType(String tokenType) { this.tokenType = tokenType; }
+    public boolean canManageUsers() {
+        return permissions != null && permissions.contains("MANAGE_USERS");
+    }
     
-    public Long getExpiresIn() { return expiresIn; }
-    public void setExpiresIn(Long expiresIn) { this.expiresIn = expiresIn; }
-    
-    public UserDto getUser() { return user; }
-    public void setUser(UserDto user) { this.user = user; }
+    public boolean canAccessAdmin() {
+        return permissions != null && permissions.contains("ADMIN_ACCESS");
+    }
 }

@@ -1,15 +1,10 @@
 package com.example.backend.dto;
 
 import java.time.LocalDateTime;
-
 import com.example.backend.entity.Article;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @Getter
@@ -17,22 +12,20 @@ import lombok.Setter;
 @NoArgsConstructor //기본 생성자 자동 생성
 public class ArticleDto {
     private Long id;
-    
+
     @NotBlank(message = "제목은 필수입니다.")
     @Size(max = 100, message = "제목은 100자 이하로 입력하세요.")
+
     private String title;
-    
+
     @NotBlank(message = "내용은 필수입니다.")
     private String content;
-    
+
     private String author;
     private Integer viewCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Integer commentCount;
-    
-    // // 기본 생성자
-    // public ArticleDto() {}
     
     // 생성자
     public ArticleDto(Long id, String title, String content, String author, 

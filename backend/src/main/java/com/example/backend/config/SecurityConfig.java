@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true) // @PreAuthorize 어노테이션 활성화
 public class SecurityConfig {
     
     @Autowired
@@ -60,6 +62,21 @@ public class SecurityConfig {
                 .requestMatchers("GET", "/api/users/check/**").permitAll()
                 .requestMatchers("GET", "/api/cookies/**").permitAll()
                 .requestMatchers("GET", "/api/pets/**").permitAll()
+
+                // 관리자 API는 관리자만 접근 가능
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                
+                // 쿠키/펫 생성/수정/삭제는 MANAGER 이상
+                .requestMatchers("POST", "/api/cookies/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers("PUT", "/api/cookies/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers("DELETE", "/api/cookies/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers("POST", "/api/pets/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers("PUT", "/api/pets/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers("DELETE", "/api/pets/**").hasAnyRole("ADMIN", "MANAGER")
+                
+                // 게시글/댓글 작성은 인증된 사용자
+                .requestMatchers("POST", "/api/articles/**").authenticated()
+                .requestMatchers("POST", "/api/comments/**").authenticated()
                 
                 // 나머지는 인증 필요
                 .anyRequest().authenticated()

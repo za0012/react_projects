@@ -7,6 +7,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor //기본 생성자 자동 생성
 public class CookieDto {
     private Long id;
     
@@ -31,9 +36,6 @@ public class CookieDto {
     private LocalDate releaseDate;
     private CookieRarity rarity;
     private String description;
-    
-    // 기본 생성자
-    public CookieDto() {}
     
     // 전체 생성자
     public CookieDto(Long id, String name, String imageUrl, Integer health, String ability,
@@ -85,41 +87,5 @@ public class CookieDto {
         cookie.setDescription(this.description);
         return cookie;
     }
-    
-    // Getter & Setter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-    
-    public Integer getHealth() { return health; }
-    public void setHealth(Integer health) { this.health = health; }
-    
-    public String getAbility() { return ability; }
-    public void setAbility(String ability) { this.ability = ability; }
-    
-    public Integer getUnlockStarCandies() { return unlockStarCandies; }
-    public void setUnlockStarCandies(Integer unlockStarCandies) { this.unlockStarCandies = unlockStarCandies; }
-    
-    public String getPartner() { return partner; }
-    public void setPartner(String partner) { this.partner = partner; }
-    
-    public Long getPetId() { return petId; }
-    public void setPetId(Long petId) { this.petId = petId; }
-    
-    public String getPetName() { return petName; }
-    public void setPetName(String petName) { this.petName = petName; }
-    
-    public LocalDate getReleaseDate() { return releaseDate; }
-    public void setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; }
-    
-    public CookieRarity getRarity() { return rarity; }
-    public void setRarity(CookieRarity rarity) { this.rarity = rarity; }
-    
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+
 }
