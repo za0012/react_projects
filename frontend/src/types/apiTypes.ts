@@ -1,7 +1,11 @@
-interface User {
+export interface User {
   id: number;
   username: string;
   email: string;
+  createdAt: string;
+  roles: string[];
+  admin: boolean;
+  manager: boolean;
 }
 
 interface LoginData {

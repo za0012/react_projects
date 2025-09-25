@@ -18,7 +18,6 @@ export type CookieDetails = {
   petName: string;
   releaseDate: string; // ISO 형식 날짜
   rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY" | "SPECIAL";
-  type: "BALANCE" | "SPEED" | "CHARGE" | "FLY" | "JUMP";
   description: string;
 };
 
@@ -43,6 +42,18 @@ export interface CookieListResponse {
 //   // ... 필요한 필드 추가 가능
 //   // 예: imageUrl?: string; type?: string;
 // }
+export interface CookieAdd {
+  name: string;
+  // imageUrl: "",
+  health: number;
+  ability: string;
+  partner: string;
+  // petId: 0,
+  petName: string;
+  unlockStarCandies: number;
+  rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY" | "SPECIAL";
+  description: string;
+}
 
 // 페이징 관련 정보
 export interface Pageable {

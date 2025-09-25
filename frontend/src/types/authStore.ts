@@ -1,12 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-// 사용자 타입 정의
-interface User {
-  id: number;
-  username: string;
-  email: string;
-}
+import { User } from "./apiTypes";
 
 // 스토어의 상태 타입 정의
 interface AuthState {
