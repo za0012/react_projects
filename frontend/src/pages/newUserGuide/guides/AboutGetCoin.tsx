@@ -1,7 +1,7 @@
 import React from "react";
 
 const AboutGetCoin = () => {
-  return <div>AboutGetCoin</div>;
+  return <div>dsada</div>;
 };
 
 export default AboutGetCoin;
