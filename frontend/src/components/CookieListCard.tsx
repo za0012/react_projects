@@ -44,10 +44,6 @@ const CookieListCard = ({
           <span className="font-semibold text-gray-800">🐾 짝꿍:</span>{" "}
           {partner || "없음"}
         </p>
-        <p className="col-span-2">
-          <span className="font-semibold text-gray-800">📅 출시일:</span>{" "}
-          {releaseDate}
-        </p>
       </div>
     </div>
   );
