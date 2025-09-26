@@ -17,8 +17,11 @@ const Signup = () => {
         .json();
       console.log(response);
       window.location.href = "/auth/login";
-    } catch (error) {
+    } catch (error: any) {
       console.log("회원가입 오류: ", error);
+      if (error.response?.status === 400) {
+        alert("존재하는 아이디입니다.");
+      }
     }
   };
   return (

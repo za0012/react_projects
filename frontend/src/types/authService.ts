@@ -19,10 +19,16 @@ export const login = async (
       .getState()
       .setLogin(data.accessToken, data.refreshToken, data.user); // Zustand 스토어의 setLogin 액션 호출
 
-    console.log("로그인 성공!", response);
+    console.log("로그인 성공!", data.user.admin);
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error("로그인 실패:", error);
+
+    if (error.response.status === 401) {
+      alert("잠궈진 계정입니다. 문의는 1:1로 보내주세요.");
+    } else if (error.response.status === 400) {
+      alert("아이디와 비밀번호를 다시 확인해주세요.");
+    }
     return false;
   }
 };

@@ -47,7 +47,8 @@ const Login = () => {
           <p className="text-blue-500 hover:underline">회원가입</p>
         </Link>
         <p className="mt-4 text-center text-sm text-gray-600">
-          임시 id, password: setEmail/setEmail
+          임시 id, password: setEmails/setEmails 임시 관리자 id, password:
+          admin/admin123!@#
         </p>
       </div>
     </div>
