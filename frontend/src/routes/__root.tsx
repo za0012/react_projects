@@ -1,4 +1,9 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  Link,
+  Outlet,
+  useLocation,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import logo from "@/assets/image/manujallll.png";
 import useAuthStore from "@/types/authStore";
@@ -7,10 +12,17 @@ import { logout } from "@/types/authService";
 // 기존 Header 컴포넌트를 여기로 통합
 const Header = () => {
   const { isLoggedIn, user } = useAuthStore();
+  const location = useLocation();
+  const currentPath = location.pathname.startsWith("/management");
 
   const handleLogout = () => {
     logout();
+    window.location.href = "/";
   };
+
+  if (currentPath) {
+    return null;
+  }
 
   return (
     <header className="flex items-center justify-between bg-white px-6 py-4 shadow-sm">
