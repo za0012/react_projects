@@ -1,7 +1,13 @@
+import Sidebar from "@/components/Sidebar";
 import React from "react";
 
 const BannerManagement = () => {
-  return <div>BannerManagement</div>;
+  return (
+    <div>
+      <Sidebar />
+      BannerManagement
+    </div>
+  );
 };
 
 export default BannerManagement;

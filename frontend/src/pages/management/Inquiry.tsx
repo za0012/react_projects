@@ -1,7 +1,13 @@
+import Sidebar from "@/components/Sidebar";
 import React from "react";
 
 const Inquiry = () => {
-  return <div>Inquiry</div>;
+  return (
+    <div>
+      <Sidebar />
+      Inquiry
+    </div>
+  );
 };
 
 export default Inquiry;
