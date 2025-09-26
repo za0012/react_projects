@@ -44,13 +44,14 @@ export interface CookieListResponse {
 // }
 export interface CookieAdd {
   name: string;
-  // imageUrl: "",
+  // imageUrl: string;
   health: number;
   ability: string;
-  partner: string;
-  // petId: 0,
+  // partner: string;
+  // petId: number;
   petName: string;
   unlockStarCandies: number;
+  // releaseDate: string; // ISO 형식 날짜
   rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY" | "SPECIAL";
   description: string;
 }

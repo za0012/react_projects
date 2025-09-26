@@ -1,10 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import React from "react";
 
 const GuideList = () => {
   return (
     <div className="mx-auto mt-8 max-w-2xl rounded-2xl bg-gray-50 p-6 shadow-lg">
-      {/* 헤더 */}
       <div className="mb-8 border-b border-gray-200 pb-4">
         <h1 className="text-3xl font-extrabold text-gray-800">
           <span className="mr-2 text-3xl">🍪</span>
