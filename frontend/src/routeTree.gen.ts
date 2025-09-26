@@ -11,10 +11,17 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ManagementIndexRouteImport } from './routes/management/index'
 import { Route as CookieIndexRouteImport } from './routes/cookie/index'
 import { Route as BoardIndexRouteImport } from './routes/board/index'
 import { Route as StrategyCookietierRouteImport } from './routes/strategy/cookietier'
 import { Route as NewUserGuideListRouteImport } from './routes/newUserGuide/list'
+import { Route as ManagementTreasureRouteImport } from './routes/management/treasure'
+import { Route as ManagementPetRouteImport } from './routes/management/pet'
+import { Route as ManagementInquiryRouteImport } from './routes/management/inquiry'
+import { Route as ManagementCookieManRouteImport } from './routes/management/cookieMan'
+import { Route as ManagementBoardRouteImport } from './routes/management/board'
+import { Route as ManagementBannerRouteImport } from './routes/management/banner'
 import { Route as CookieArticleIdRouteImport } from './routes/cookie/$articleId'
 import { Route as BoardWriteRouteImport } from './routes/board/write'
 import { Route as BoardArticleIdRouteImport } from './routes/board/$articleId'
@@ -26,6 +33,7 @@ import { Route as NewUserGuideGuidesAboutLegendaryRouteImport } from './routes/n
 import { Route as NewUserGuideGuidesAboutGemRouteImport } from './routes/newUserGuide/guides/aboutGem'
 import { Route as NewUserGuideGuidesAboutCrystalRouteImport } from './routes/newUserGuide/guides/aboutCrystal'
 import { Route as NewUserGuideGuidesAboutBoxRouteImport } from './routes/newUserGuide/guides/aboutBox'
+import { Route as ManagementCookieAddRouteImport } from './routes/management/cookie/add'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -35,6 +43,11 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagementIndexRoute = ManagementIndexRouteImport.update({
+  id: '/management/',
+  path: '/management/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CookieIndexRoute = CookieIndexRouteImport.update({
@@ -55,6 +68,36 @@ const StrategyCookietierRoute = StrategyCookietierRouteImport.update({
 const NewUserGuideListRoute = NewUserGuideListRouteImport.update({
   id: '/newUserGuide/list',
   path: '/newUserGuide/list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagementTreasureRoute = ManagementTreasureRouteImport.update({
+  id: '/management/treasure',
+  path: '/management/treasure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagementPetRoute = ManagementPetRouteImport.update({
+  id: '/management/pet',
+  path: '/management/pet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagementInquiryRoute = ManagementInquiryRouteImport.update({
+  id: '/management/inquiry',
+  path: '/management/inquiry',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagementCookieManRoute = ManagementCookieManRouteImport.update({
+  id: '/management/cookieMan',
+  path: '/management/cookieMan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagementBoardRoute = ManagementBoardRouteImport.update({
+  id: '/management/board',
+  path: '/management/board',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagementBannerRoute = ManagementBannerRouteImport.update({
+  id: '/management/banner',
+  path: '/management/banner',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CookieArticleIdRoute = CookieArticleIdRouteImport.update({
@@ -118,6 +161,11 @@ const NewUserGuideGuidesAboutBoxRoute =
     path: '/newUserGuide/guides/aboutBox',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ManagementCookieAddRoute = ManagementCookieAddRouteImport.update({
+  id: '/management/cookie/add',
+  path: '/management/cookie/add',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -127,10 +175,18 @@ export interface FileRoutesByFullPath {
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/cookie/$articleId': typeof CookieArticleIdRoute
+  '/management/banner': typeof ManagementBannerRoute
+  '/management/board': typeof ManagementBoardRoute
+  '/management/cookieMan': typeof ManagementCookieManRoute
+  '/management/inquiry': typeof ManagementInquiryRoute
+  '/management/pet': typeof ManagementPetRoute
+  '/management/treasure': typeof ManagementTreasureRoute
   '/newUserGuide/list': typeof NewUserGuideListRoute
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
   '/cookie': typeof CookieIndexRoute
+  '/management': typeof ManagementIndexRoute
+  '/management/cookie/add': typeof ManagementCookieAddRoute
   '/newUserGuide/guides/aboutBox': typeof NewUserGuideGuidesAboutBoxRoute
   '/newUserGuide/guides/aboutCrystal': typeof NewUserGuideGuidesAboutCrystalRoute
   '/newUserGuide/guides/aboutGem': typeof NewUserGuideGuidesAboutGemRoute
@@ -146,10 +202,18 @@ export interface FileRoutesByTo {
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/cookie/$articleId': typeof CookieArticleIdRoute
+  '/management/banner': typeof ManagementBannerRoute
+  '/management/board': typeof ManagementBoardRoute
+  '/management/cookieMan': typeof ManagementCookieManRoute
+  '/management/inquiry': typeof ManagementInquiryRoute
+  '/management/pet': typeof ManagementPetRoute
+  '/management/treasure': typeof ManagementTreasureRoute
   '/newUserGuide/list': typeof NewUserGuideListRoute
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board': typeof BoardIndexRoute
   '/cookie': typeof CookieIndexRoute
+  '/management': typeof ManagementIndexRoute
+  '/management/cookie/add': typeof ManagementCookieAddRoute
   '/newUserGuide/guides/aboutBox': typeof NewUserGuideGuidesAboutBoxRoute
   '/newUserGuide/guides/aboutCrystal': typeof NewUserGuideGuidesAboutCrystalRoute
   '/newUserGuide/guides/aboutGem': typeof NewUserGuideGuidesAboutGemRoute
@@ -166,10 +230,18 @@ export interface FileRoutesById {
   '/board/$articleId': typeof BoardArticleIdRoute
   '/board/write': typeof BoardWriteRoute
   '/cookie/$articleId': typeof CookieArticleIdRoute
+  '/management/banner': typeof ManagementBannerRoute
+  '/management/board': typeof ManagementBoardRoute
+  '/management/cookieMan': typeof ManagementCookieManRoute
+  '/management/inquiry': typeof ManagementInquiryRoute
+  '/management/pet': typeof ManagementPetRoute
+  '/management/treasure': typeof ManagementTreasureRoute
   '/newUserGuide/list': typeof NewUserGuideListRoute
   '/strategy/cookietier': typeof StrategyCookietierRoute
   '/board/': typeof BoardIndexRoute
   '/cookie/': typeof CookieIndexRoute
+  '/management/': typeof ManagementIndexRoute
+  '/management/cookie/add': typeof ManagementCookieAddRoute
   '/newUserGuide/guides/aboutBox': typeof NewUserGuideGuidesAboutBoxRoute
   '/newUserGuide/guides/aboutCrystal': typeof NewUserGuideGuidesAboutCrystalRoute
   '/newUserGuide/guides/aboutGem': typeof NewUserGuideGuidesAboutGemRoute
@@ -187,10 +259,18 @@ export interface FileRouteTypes {
     | '/board/$articleId'
     | '/board/write'
     | '/cookie/$articleId'
+    | '/management/banner'
+    | '/management/board'
+    | '/management/cookieMan'
+    | '/management/inquiry'
+    | '/management/pet'
+    | '/management/treasure'
     | '/newUserGuide/list'
     | '/strategy/cookietier'
     | '/board'
     | '/cookie'
+    | '/management'
+    | '/management/cookie/add'
     | '/newUserGuide/guides/aboutBox'
     | '/newUserGuide/guides/aboutCrystal'
     | '/newUserGuide/guides/aboutGem'
@@ -206,10 +286,18 @@ export interface FileRouteTypes {
     | '/board/$articleId'
     | '/board/write'
     | '/cookie/$articleId'
+    | '/management/banner'
+    | '/management/board'
+    | '/management/cookieMan'
+    | '/management/inquiry'
+    | '/management/pet'
+    | '/management/treasure'
     | '/newUserGuide/list'
     | '/strategy/cookietier'
     | '/board'
     | '/cookie'
+    | '/management'
+    | '/management/cookie/add'
     | '/newUserGuide/guides/aboutBox'
     | '/newUserGuide/guides/aboutCrystal'
     | '/newUserGuide/guides/aboutGem'
@@ -225,10 +313,18 @@ export interface FileRouteTypes {
     | '/board/$articleId'
     | '/board/write'
     | '/cookie/$articleId'
+    | '/management/banner'
+    | '/management/board'
+    | '/management/cookieMan'
+    | '/management/inquiry'
+    | '/management/pet'
+    | '/management/treasure'
     | '/newUserGuide/list'
     | '/strategy/cookietier'
     | '/board/'
     | '/cookie/'
+    | '/management/'
+    | '/management/cookie/add'
     | '/newUserGuide/guides/aboutBox'
     | '/newUserGuide/guides/aboutCrystal'
     | '/newUserGuide/guides/aboutGem'
@@ -245,10 +341,18 @@ export interface RootRouteChildren {
   BoardArticleIdRoute: typeof BoardArticleIdRoute
   BoardWriteRoute: typeof BoardWriteRoute
   CookieArticleIdRoute: typeof CookieArticleIdRoute
+  ManagementBannerRoute: typeof ManagementBannerRoute
+  ManagementBoardRoute: typeof ManagementBoardRoute
+  ManagementCookieManRoute: typeof ManagementCookieManRoute
+  ManagementInquiryRoute: typeof ManagementInquiryRoute
+  ManagementPetRoute: typeof ManagementPetRoute
+  ManagementTreasureRoute: typeof ManagementTreasureRoute
   NewUserGuideListRoute: typeof NewUserGuideListRoute
   StrategyCookietierRoute: typeof StrategyCookietierRoute
   BoardIndexRoute: typeof BoardIndexRoute
   CookieIndexRoute: typeof CookieIndexRoute
+  ManagementIndexRoute: typeof ManagementIndexRoute
+  ManagementCookieAddRoute: typeof ManagementCookieAddRoute
   NewUserGuideGuidesAboutBoxRoute: typeof NewUserGuideGuidesAboutBoxRoute
   NewUserGuideGuidesAboutCrystalRoute: typeof NewUserGuideGuidesAboutCrystalRoute
   NewUserGuideGuidesAboutGemRoute: typeof NewUserGuideGuidesAboutGemRoute
@@ -271,6 +375,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/management/': {
+      id: '/management/'
+      path: '/management'
+      fullPath: '/management'
+      preLoaderRoute: typeof ManagementIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cookie/': {
@@ -299,6 +410,48 @@ declare module '@tanstack/react-router' {
       path: '/newUserGuide/list'
       fullPath: '/newUserGuide/list'
       preLoaderRoute: typeof NewUserGuideListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/management/treasure': {
+      id: '/management/treasure'
+      path: '/management/treasure'
+      fullPath: '/management/treasure'
+      preLoaderRoute: typeof ManagementTreasureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/management/pet': {
+      id: '/management/pet'
+      path: '/management/pet'
+      fullPath: '/management/pet'
+      preLoaderRoute: typeof ManagementPetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/management/inquiry': {
+      id: '/management/inquiry'
+      path: '/management/inquiry'
+      fullPath: '/management/inquiry'
+      preLoaderRoute: typeof ManagementInquiryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/management/cookieMan': {
+      id: '/management/cookieMan'
+      path: '/management/cookieMan'
+      fullPath: '/management/cookieMan'
+      preLoaderRoute: typeof ManagementCookieManRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/management/board': {
+      id: '/management/board'
+      path: '/management/board'
+      fullPath: '/management/board'
+      preLoaderRoute: typeof ManagementBoardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/management/banner': {
+      id: '/management/banner'
+      path: '/management/banner'
+      fullPath: '/management/banner'
+      preLoaderRoute: typeof ManagementBannerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cookie/$articleId': {
@@ -378,6 +531,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewUserGuideGuidesAboutBoxRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/management/cookie/add': {
+      id: '/management/cookie/add'
+      path: '/management/cookie/add'
+      fullPath: '/management/cookie/add'
+      preLoaderRoute: typeof ManagementCookieAddRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -389,10 +549,18 @@ const rootRouteChildren: RootRouteChildren = {
   BoardArticleIdRoute: BoardArticleIdRoute,
   BoardWriteRoute: BoardWriteRoute,
   CookieArticleIdRoute: CookieArticleIdRoute,
+  ManagementBannerRoute: ManagementBannerRoute,
+  ManagementBoardRoute: ManagementBoardRoute,
+  ManagementCookieManRoute: ManagementCookieManRoute,
+  ManagementInquiryRoute: ManagementInquiryRoute,
+  ManagementPetRoute: ManagementPetRoute,
+  ManagementTreasureRoute: ManagementTreasureRoute,
   NewUserGuideListRoute: NewUserGuideListRoute,
   StrategyCookietierRoute: StrategyCookietierRoute,
   BoardIndexRoute: BoardIndexRoute,
   CookieIndexRoute: CookieIndexRoute,
+  ManagementIndexRoute: ManagementIndexRoute,
+  ManagementCookieAddRoute: ManagementCookieAddRoute,
   NewUserGuideGuidesAboutBoxRoute: NewUserGuideGuidesAboutBoxRoute,
   NewUserGuideGuidesAboutCrystalRoute: NewUserGuideGuidesAboutCrystalRoute,
   NewUserGuideGuidesAboutGemRoute: NewUserGuideGuidesAboutGemRoute,
