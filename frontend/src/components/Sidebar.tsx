@@ -16,9 +16,9 @@ const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const { isLoggedIn, user } = useAuthStore();
   const Menus = [
-    { title: "쿠키 추가", src: menu1, link: "/management/cookieMan" },
+    { title: "쿠키 관리", src: menu1, link: "/management/cookieMan" },
     { title: "보물 관리", src: menu2, link: "/management/treasure" },
-    { title: "펫 관리", src: menu3, gap: true, link: "/management/pet" },
+    { title: "펫 관리", src: menu3, gap: true, link: "/management/petMan" },
     { title: "배너 관리", src: menu4, link: "/management/banner" },
     { title: "게시판 관리", src: menu5, link: "" },
     { title: "1:1 문의들", src: menu6, link: "/management/inquiry" },
@@ -56,7 +56,7 @@ const Sidebar = () => {
         </Link>
         <ul className="flex-grow overflow-y-auto pt-6">
           {Menus.map((Menu, index) => (
-            <Link to={Menu.link}>
+            <Link to={Menu.link} key={index}>
               <li
                 key={index}
                 className={`hover:bg-light-white flex cursor-pointer items-center gap-x-4 rounded-md p-2 text-sm text-white ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`}
