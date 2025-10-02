@@ -3,9 +3,11 @@ import React from "react";
 
 const TreasureManagement = () => {
   return (
-    <div>
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
-      TreasureManagement
+      <div>
+        <p>TreasureManagement</p>
+      </div>
     </div>
   );
 };
