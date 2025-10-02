@@ -78,6 +78,17 @@
            등과 같은 이유로 RHF를 사용하게 되었다. (성능과 최소한의 리렌더링을 중시)
         참조: https://npm-compare.com/ko-KR/@tanstack/react-form,@unform/core,formik,react-hook-form
               https://blog.logrocket.com/tanstack-form-vs-react-hook-form/   + etc...
+    13. 왜 tailwindcss를 설치했는가?
+        css를 할 수 있는 건 css모듈뿐만이 아니라 tailwindcss, styled components, emotion 등이 있다.
+        css모듈은 바닐라 css와 사용하기 적합하고, styled components와 emotion은 CSS-in-JS 방식으로
+            const base = css`
+                background-color: white;
+                color: blue;
+            `;
+        해당 방식으로 코드를 짤 수 있다.
+        하지만 나는 클래스 이름을 짓기 위해 머리를 싸매고, 각각 페이지에 css를 작성해야하는 것보다 클래스에 직관적으로 스타일을 넣을 수 있는 tailwindcss가 더 매력적으로 보여, 해당 패키지를 추가하게 되었다.
+        +) 간편하고 빠르고 직관적인 이유도 한 몫했다.
+        +) tailwindcss를 사용하지 않는 사람들의 많은 이유로는 클래스명이 길어진다는 부분이 있었는데 v4가 나오면서 @apply 지시어를 통해 해당 문제를 어느정도 잡을 수 있다는 점이 있다.
 
 # 타입 정의 관련
 
@@ -142,3 +153,8 @@
 "type": "image/png",
 "sizes": "512x512"
 }
+
+tailwindcss
+-> 작은 단위의 유틸리티 클래스들을 조합해 자유롭게 디자인을 구성할 수 있게 해줌.
+-> 직관적인 클래스 이름을 통해 CSS를 작성하는 시간을 절약하고, 일관된 디자인 시스템을 유지할 수 있음.
+-> 모듈화된 CSS로 코드 중복 감소 및 유지보수 용이, 쉬운 반응형 디자인, 커스터마이징 가능, 최적화된 빌드 크기라는 장점이 있음.
