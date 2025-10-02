@@ -1,0 +1,121 @@
+import { Link } from "@tanstack/react-router";
+import { CookieListResponse } from "@/types/cookie";
+import ky from "ky";
+import { useEffect, useState } from "react";
+import CookieListCard from "@/components/CookieListCard";
+import PageNation from "@/components/PageNation";
+import Sidebar from "@/components/Sidebar";
+
+const CookieManagement = () => {
+  const [page, setPage] = useState(0);
+  const [search, setSearch] = useState<CookieListResponse>();
+  const [searchValue, setSearchValue] = useState("");
+  const [data, setData] = useState<CookieListResponse | null>(null);
+  const [cookieNum, setCookieNum] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await ky
+          .get(
+            `http://localhost:8080/api/cookies?page=${page}&size=10&sortBy=health&sortDir=desc`,
+          )
+          .json<CookieListResponse>();
+        setData(response);
+        console.log(data);
+      } catch (error) {
+        console.log("데이터를 가져오지 못했습니다.", error);
+      }
+    };
+    fetchData();
+  }, [page]);
+
+  const handleSearch = async () => {
+    try {
+      const filterData = await ky
+        .get(
+          `http://localhost:8080/api/cookies/search?type=all&keyword=${searchValue}`,
+        )
+        .json<CookieListResponse>();
+      console.log(filterData);
+      setSearch(filterData);
+    } catch (error) {
+      console.error("검색 오류", error);
+    }
+  };
+
+  // const deleteFn = async (id: number) => {
+  //   try {
+  //     const response = await ky
+  //       .delete(`http://localhost:8080/api/cookies/${id}`)
+  //       .json<CookieListResponse>();
+  //     console.log("쿠키 삭제 성공!");
+  //     setSearch(response);
+  //   } catch (error) {
+  //     console.error("쿠키 삭제 오류", error);
+  //   }
+  // };
+
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar />
+      <div className="flex-1 p-8">
+        <div className="mx-auto max-w-7xl">
+          <Link to="/management/cookie/add">쿠키 추가</Link>
+          <div className="mb-12 flex items-center justify-center space-x-2">
+            <input
+              type="text"
+              placeholder="🍪 쿠키 이름을 입력하세요"
+              className="w-full max-w-md rounded-full border border-gray-200 bg-white px-5 py-2 text-base text-gray-700 shadow-inner focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-200"
+              onChange={e => setSearchValue(e.target.value)}
+            />
+            <button
+              className="rounded-full bg-blue-500 px-6 py-2 text-base font-semibold text-white shadow-md transition duration-200 hover:bg-blue-600"
+              onClick={handleSearch}
+            >
+              검색
+            </button>
+          </div>
+
+          {data ? (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {(!search ? data.content : search.content).map(item => (
+                <CookieListCard
+                  id={item.id}
+                  key={item.id}
+                  name={item.name}
+                  health={item.health}
+                  ability={item.ability}
+                  unlockStarCandies={item.unlockStarCandies}
+                  partner={item.partner}
+                  releaseDate={item.releaseDate}
+                  // deleteFn={deleteFn(item.id)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex h-64 animate-pulse items-center justify-center text-xl text-gray-500">
+              🍪 쿠키 데이터를 불러오는 중이에요...
+            </div>
+          )}
+
+          {/* 페이지네이션 */}
+          {data && (
+            <PageNation
+              pageNumber={(!search ? data : search).number}
+              totalPages={(!search ? data : search).totalPages}
+              onPrevClickBefore={() => setPage(prev => Math.max(prev - 1, 0))}
+              onPrevClickAfter={() =>
+                setPage(prev =>
+                  Math.min(prev + 1, (!search ? data : search).totalPages - 1),
+                )
+              }
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CookieManagement;
