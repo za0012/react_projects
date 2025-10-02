@@ -2,9 +2,13 @@ package com.example.backend.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import lombok.*;
+import java.util.Set;
 
+@Getter
+@Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "pets")
 public class Pet {
     
@@ -29,11 +33,8 @@ public class Pet {
     @Column(length = 2000)
     private String description; // 펫 설명
     
-    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Cookie> cookies; // 이 펫을 가진 쿠키들
-    
-    // 기본 생성자
-    public Pet() {}
+    @ManyToMany(mappedBy = "pets", fetch = FetchType.LAZY)
+    private Set<Cookie> cookies; // 이 펫을 가진 쿠키들
     
     // 생성자
     public Pet(String name, String imageUrl, String ability, PetRarity rarity, 
@@ -45,29 +46,4 @@ public class Pet {
         this.releaseDate = releaseDate;
         this.description = description;
     }
-    
-    // Getter & Setter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-    
-    public String getAbility() { return ability; }
-    public void setAbility(String ability) { this.ability = ability; }
-    
-    public PetRarity getRarity() { return rarity; }
-    public void setRarity(PetRarity rarity) { this.rarity = rarity; }
-    
-    public LocalDate getReleaseDate() { return releaseDate; }
-    public void setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; }
-    
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    
-    public List<Cookie> getCookies() { return cookies; }
-    public void setCookies(List<Cookie> cookies) { this.cookies = cookies; }
 }

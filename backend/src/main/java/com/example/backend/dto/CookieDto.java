@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-
+import java.util.List;
 import lombok.*;
 
 @Getter
@@ -31,15 +31,15 @@ public class CookieDto {
     private Integer unlockStarCandies;
     
     private String partner;
-    private Long petId;
-    private String petName; // 조회용
+    private List<Long> petIds;   
+    private List<String> petNames;       // 펫 이름 목록 (조회용)
     private LocalDate releaseDate;
     private CookieRarity rarity;
     private String description;
     
     // 전체 생성자
     public CookieDto(Long id, String name, String imageUrl, Integer health, String ability,
-                    Integer unlockStarCandies, String partner, Long petId, String petName,
+                    Integer unlockStarCandies, String partner, List<Long> petIds, List<String> petNames,
                     LocalDate releaseDate, CookieRarity rarity, String description) {
         this.id = id;
         this.name = name;
@@ -48,8 +48,8 @@ public class CookieDto {
         this.ability = ability;
         this.unlockStarCandies = unlockStarCandies;
         this.partner = partner;
-        this.petId = petId;
-        this.petName = petName;
+        this.petIds = petIds;
+        this.petNames = petNames;
         this.releaseDate = releaseDate;
         this.rarity = rarity;
         this.description = description;
@@ -57,6 +57,18 @@ public class CookieDto {
     
     // Entity -> DTO 변환
     public static CookieDto fromEntity(Cookie cookie) {
+        List<Long> petIds = null;
+        List<String> petNames = null;
+        
+        if (cookie.getPets() != null && !cookie.getPets().isEmpty()) {
+            petIds = cookie.getPets().stream()
+                    .map(pet -> pet.getId())
+                    .toList();
+            petNames = cookie.getPets().stream()
+                    .map(pet -> pet.getName())
+                    .toList();
+        }
+        
         return new CookieDto(
             cookie.getId(),
             cookie.getName(),
@@ -65,8 +77,8 @@ public class CookieDto {
             cookie.getAbility(),
             cookie.getUnlockStarCandies(),
             cookie.getPartner(),
-            cookie.getPet() != null ? cookie.getPet().getId() : null,
-            cookie.getPet() != null ? cookie.getPet().getName() : null,
+            petIds,
+            petNames,
             cookie.getReleaseDate(),
             cookie.getRarity(),
             cookie.getDescription()

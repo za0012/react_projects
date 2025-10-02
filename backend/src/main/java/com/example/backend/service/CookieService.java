@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.CookieDto;
+import com.example.backend.dto.PetDto;
 import com.example.backend.entity.Cookie;
 import com.example.backend.entity.CookieRarity;
 import com.example.backend.entity.Pet;
@@ -12,9 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +25,8 @@ public class CookieService {
     
     @Autowired
     private PetRepository petRepository;
+    
+    // ==================== 기본 CRUD ====================
     
     // 모든 쿠키 조회 (페이징)
     @Transactional(readOnly = true)
@@ -60,10 +61,9 @@ public class CookieService {
         Cookie cookie = cookieDto.toEntity();
         
         // 펫이 있는 경우 설정
-        if (cookieDto.getPetId() != null) {
-            Pet pet = petRepository.findById(cookieDto.getPetId())
-                    .orElseThrow(() -> new RuntimeException("펫을 찾을 수 없습니다."));
-            cookie.setPet(pet);
+        if (cookieDto.getPetIds() != null && !cookieDto.getPetIds().isEmpty()) {
+            Set<Pet> pets = new HashSet<>(getPetsByIds(cookieDto.getPetIds()));
+            cookie.setPets(pets);
         }
         
         Cookie savedCookie = cookieRepository.save(cookie);
@@ -93,12 +93,11 @@ public class CookieService {
         cookie.setDescription(cookieDto.getDescription());
         
         // 펫 설정
-        if (cookieDto.getPetId() != null) {
-            Pet pet = petRepository.findById(cookieDto.getPetId())
-                    .orElseThrow(() -> new RuntimeException("펫을 찾을 수 없습니다."));
-            cookie.setPet(pet);
+        if (cookieDto.getPetIds() != null && !cookieDto.getPetIds().isEmpty()) {
+            Set<Pet> pets = new HashSet<>(getPetsByIds(cookieDto.getPetIds()));
+            cookie.setPets(pets);
         } else {
-            cookie.setPet(null);
+            cookie.setPets(new HashSet<>());
         }
         
         Cookie updatedCookie = cookieRepository.save(cookie);
@@ -111,6 +110,8 @@ public class CookieService {
                 .orElseThrow(() -> new RuntimeException("쿠키를 찾을 수 없습니다."));
         cookieRepository.delete(cookie);
     }
+    
+    // ==================== 검색 및 필터링 ====================
     
     // 이름으로 검색
     @Transactional(readOnly = true)
@@ -152,7 +153,7 @@ public class CookieService {
     // 특정 펫을 가진 쿠키들 조회
     @Transactional(readOnly = true)
     public Page<CookieDto> getCookiesByPet(Long petId, Pageable pageable) {
-        return cookieRepository.findByPetId(petId, pageable)
+        return cookieRepository.findByPetsId(petId, pageable)
                 .map(CookieDto::fromEntity);
     }
     
@@ -209,6 +210,8 @@ public class CookieService {
         return cookieRepository.existsByName(name);
     }
     
+    // ==================== 통계 ====================
+    
     // 통계 정보 조회
     @Transactional(readOnly = true)
     public Map<String, Object> getCookieStatistics() {
@@ -231,5 +234,66 @@ public class CookieService {
         stats.put("averageStarCandies", cookieRepository.getAverageUnlockStarCandies());
         
         return stats;
+    }
+    
+    // ==================== 펫 관련 메서드 ====================
+    
+    // 펫 이름으로 쿠키에 펫 추가
+    public void addPetToCookie(Long cookieId, String petName) {
+        Cookie cookie = cookieRepository.findById(cookieId)
+                .orElseThrow(() -> new RuntimeException("쿠키를 찾을 수 없습니다."));
+        
+        Pet pet = petRepository.findByName(petName)
+                .orElseThrow(() -> new RuntimeException("펫을 찾을 수 없습니다: " + petName));
+        
+        cookie.addPet(pet);
+        cookieRepository.save(cookie);
+    }
+    
+    // 여러 펫을 한번에 추가 (펫 이름들로)
+    public void addPetsToCookie(Long cookieId, List<String> petNames) {
+        Cookie cookie = cookieRepository.findById(cookieId)
+                .orElseThrow(() -> new RuntimeException("쿠키를 찾을 수 없습니다."));
+        
+        for (String petName : petNames) {
+            Pet pet = petRepository.findByName(petName)
+                    .orElseThrow(() -> new RuntimeException("펫을 찾을 수 없습니다: " + petName));
+            cookie.addPet(pet);
+        }
+        
+        cookieRepository.save(cookie);
+    }
+    
+    // 쿠키에서 펫 제거 (펫 이름으로)
+    public void removePetFromCookie(Long cookieId, String petName) {
+        Cookie cookie = cookieRepository.findById(cookieId)
+                .orElseThrow(() -> new RuntimeException("쿠키를 찾을 수 없습니다."));
+        
+        Pet pet = petRepository.findByName(petName)
+                .orElseThrow(() -> new RuntimeException("펫을 찾을 수 없습니다: " + petName));
+        
+        cookie.removePet(pet);
+        cookieRepository.save(cookie);
+    }
+    
+    // 쿠키의 모든 펫 조회
+    @Transactional(readOnly = true)
+    public List<PetDto> getCookiePets(Long cookieId) {
+        Cookie cookie = cookieRepository.findById(cookieId)
+                .orElseThrow(() -> new RuntimeException("쿠키를 찾을 수 없습니다."));
+        
+        return cookie.getPets().stream()
+                .map(PetDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+    
+    // ==================== 헬퍼 메서드 ====================
+    
+    // Pet ID 목록으로 Pet 엔티티 조회
+    private List<Pet> getPetsByIds(List<Long> petIds) {
+        return petIds.stream()
+                .map(petId -> petRepository.findById(petId)
+                        .orElseThrow(() -> new RuntimeException("펫을 찾을 수 없습니다: ID " + petId)))
+                .collect(Collectors.toList());
     }
 }

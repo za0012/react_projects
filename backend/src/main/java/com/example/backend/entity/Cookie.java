@@ -3,6 +3,8 @@ package com.example.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 import java.time.LocalDate;
 
 @Entity
@@ -35,9 +37,14 @@ public class Cookie {
 
     private String partner; // 짝꿍
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_id")
-    private Pet pet; // 펫
+    // 변경: 다대다 관계로 여러 펫 연결 가능
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "cookie_pets",
+        joinColumns = @JoinColumn(name = "cookie_id"),
+        inverseJoinColumns = @JoinColumn(name = "pet_id")
+    )
+    private Set<Pet> pets; // 여러 펫들
 
     private LocalDate releaseDate; // 출시일
 
@@ -46,4 +53,32 @@ public class Cookie {
 
     @Column(length = 2000)
     private String description; // 쿠키 설명
+
+    public Cookie(String name, String imageUrl, Integer health, String ability, 
+                 Integer unlockStarCandies, String partner, Set<Pet> pets, 
+                 LocalDate releaseDate, CookieRarity rarity, String description) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.health = health;
+        this.ability = ability;
+        this.unlockStarCandies = unlockStarCandies;
+        this.partner = partner;
+        this.pets = pets;
+        this.releaseDate = releaseDate;
+        this.rarity = rarity;
+        this.description = description;
+    }
+    
+    // 펫 관리 편의 메서드들
+    public void addPet(Pet pet) {
+        if (pets != null) {
+            pets.add(pet);
+        }
+    }
+    
+    public void removePet(Pet pet) {
+        if (pets != null) {
+            pets.remove(pet);
+        }
+    }
 }

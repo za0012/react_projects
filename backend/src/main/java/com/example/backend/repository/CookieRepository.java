@@ -38,7 +38,7 @@ public interface CookieRepository extends JpaRepository<Cookie, Long> {
     Page<Cookie> findByUnlockStarCandiesBetween(Integer minCandies, Integer maxCandies, Pageable pageable);
     
     // 특정 펫을 가진 쿠키들 조회
-    Page<Cookie> findByPetId(Long petId, Pageable pageable);
+    Page<Cookie> findByPetsId(Long petId, Pageable pageable);
     
     // 짝꿍이 있는 쿠키들 조회
     Page<Cookie> findByPartnerIsNotNull(Pageable pageable);

@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 
                 // 쿠키/펫 생성/수정/삭제는 MANAGER 이상
-                .requestMatchers("POST", "/api/cookies/**").hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers("POST", "/api/cookies/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
                 .requestMatchers("PUT", "/api/cookies/**").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers("DELETE", "/api/cookies/**").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers("POST", "/api/pets/**").hasAnyRole("ADMIN", "MANAGER")
