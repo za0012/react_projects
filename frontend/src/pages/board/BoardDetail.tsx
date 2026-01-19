@@ -24,9 +24,9 @@ const BoardDetail = () => {
   }, [articleId]);
 
   return (
-    <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-blue-500 p-6 text-white shadow-lg">
+    <div className="m-11 mt-8 max-w-full text-white">
       {data ? (
-        <div className="rounded-lg bg-white p-6 text-gray-900 shadow">
+        <div className="rounded-lg bg-white p-6 text-gray-900">
           <h1 className="mb-4 text-2xl font-bold text-blue-600">
             {data.title}
           </h1>

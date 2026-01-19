@@ -28,9 +28,9 @@ const WriteBoard = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 via-pink-100 to-yellow-100">
+    <div className="max-h-full max-w-full bg-gradient-to-br">
       <form
-        className="w-full max-w-md space-y-4 rounded-xl bg-white p-8 shadow-lg"
+        className="flex min-w-full flex-col items-center justify-center space-y-4 rounded-xl p-11"
         onSubmit={createArticle}
       >
         <h2 className="mb-4 text-center text-2xl font-bold text-blue-600">
@@ -49,7 +49,7 @@ const WriteBoard = () => {
         />
         <button
           type="submit"
-          className="w-full rounded-lg bg-blue-500 py-2 font-bold text-white transition hover:bg-blue-600"
+          className="w-2/5 rounded-lg bg-blue-500 py-2 font-bold text-white transition hover:bg-blue-600"
         >
           글쓰기
         </button>
