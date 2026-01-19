@@ -1,5 +1,5 @@
 import { CookieDetails } from "@/types/cookie";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import cookieex from "@/assets/image/escargo.png";
 
 interface CookieDetail {
@@ -23,32 +23,35 @@ const CookieListCard = ({
   // releaseDate,
   // deleteFn,
 }: CookieDetail) => {
+  const location = useLocation();
   return (
     <div
       className="relative rounded-2xl bg-white p-5 shadow-lg transition duration-300 hover:shadow-xl"
       key={id}
     >
-      {/* 삭제 버튼: 우측 상단에 작은 동그란 아이콘 버튼으로 깔끔하게 변경 */}
-      <button
-        // Link 태그와 겹치지 않도록 이벤트 버블링 방지
-        // onClick={e => {
-        //   e.preventDefault();
-        //   e.stopPropagation();
-        //   deleteFn();
-        // }}
-        className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-red-500 shadow-sm transition duration-200 hover:bg-red-500 hover:text-white"
-        aria-label="쿠키 삭제"
-      >
-        <svg // x 아이콘 사용 (삭제/닫기)
-          className="h-4 w-4"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          viewBox="0 0 24 24"
+      {location.pathname.includes("management") ? (
+        <button
+          // Link 태그와 겹치지 않도록 이벤트 버블링 방지
+          // onClick={e => {
+          //   e.preventDefault();
+          //   e.stopPropagation();
+          //   deleteFn();
+          // }}
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-red-500 shadow-sm transition duration-200 hover:bg-red-500 hover:text-white"
+          aria-label="쿠키 삭제"
         >
-          <path d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+          <svg // x 아이콘 사용 (삭제/닫기)
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            viewBox="0 0 24 24"
+          >
+            <path d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      ) : null}
+      {/* 삭제 버튼: 우측 상단에 작은 동그란 아이콘 버튼으로 깔끔하게 변경 */}
 
       <Link to="/cookie/$articleId" params={{ articleId: String(id) }}>
         <h2 className="mb-4 pr-10 text-xl font-extrabold text-gray-800 transition-colors hover:text-blue-600">
